@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by denni on 1/25/2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PropertyValueSpecification extends JsonLDType{
+public class PropertyValueSpecificationModel extends JsonLDTypeModel {
 
     @JsonProperty(value = "valueRequired")
     public String valueRequired;

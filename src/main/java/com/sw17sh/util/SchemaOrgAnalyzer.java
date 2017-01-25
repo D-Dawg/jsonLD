@@ -1,9 +1,9 @@
-package com.sw17sh.analyzer;
+package com.sw17sh.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sw17sh.Main;
 import com.sw17sh.model.WebsiteModel;
-import com.sw17sh.model.JsonLDType;
+import com.sw17sh.model.JsonLDTypeModel;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class SchemaOrgAnalyzer {
 
     public void readJsonLD(String jsonLD){
         try {
-           JsonLDType jsonLDType = objectMapper.readValue(jsonLD,JsonLDType.class);
+           JsonLDTypeModel jsonLDType = objectMapper.readValue(jsonLD,JsonLDTypeModel.class);
             if(jsonLDType != null){
                 String type = jsonLDType.getType();
                 if (type.equals("WebSite")){

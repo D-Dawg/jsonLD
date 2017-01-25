@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by ${Dennis} on 05.12.2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JsonLDType {
+public class JsonLDTypeModel {
 
     @JsonProperty("@type")
     private String type;
