@@ -9,9 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by ${Dennis} on 05.12.2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SearchActionModel {
-    @JsonProperty("@type")
-    private String type;
+public class SearchActionModel extends JsonLDType{
     @JsonProperty(value = "actionStatus")
     public String actionStatus;
     @JsonProperty(value = "target")
@@ -31,20 +29,17 @@ public class SearchActionModel {
 
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Event {
-        @JsonProperty("@type")
-        private String type;
+    public static class Event extends JsonLDType{
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Place {
-        @JsonProperty("@type")
-        private String type;
+    public static class Place extends JsonLDType{
+
         @JsonProperty(value = "address")
         public PostalAddress address;
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        public static class PostalAddress {
+        public static class PostalAddress extends JsonLDType{
             @JsonProperty("@type")
             private String type;
             @JsonProperty(value = "addressLocality-input")

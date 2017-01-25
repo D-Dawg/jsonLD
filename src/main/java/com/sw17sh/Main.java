@@ -13,6 +13,7 @@ public class Main {
         SchemaOrgAnalyzer schemaOrgAnalyzer = new SchemaOrgAnalyzer();
 
         String jsonLD = schemaOrgAnalyzer.getJsonLD(workingJsonLD);
+        schemaOrgAnalyzer.readJsonLD(jsonLD);
         WebsiteModel websiteModel = schemaOrgAnalyzer.readWebsiteModel(jsonLD);
         schemaOrgAnalyzer.writeWebsiteModel(websiteModel,saveNewJsonLD);
 

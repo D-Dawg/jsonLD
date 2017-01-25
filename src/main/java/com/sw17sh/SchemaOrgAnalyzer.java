@@ -2,6 +2,7 @@ package com.sw17sh;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sw17sh.model.WebsiteModel;
+import com.sw17sh.model.JsonLDType;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -24,9 +25,24 @@ public class SchemaOrgAnalyzer {
         return null;
     }
 
+    public void readJsonLD(String jsonLD){
+        try {
+           JsonLDType jsonLDType = objectMapper.readValue(jsonLD,JsonLDType.class);
+            if(jsonLDType != null){
+                String type = jsonLDType.getType();
+                switch(type){
+                    case "WebSite":
+                        WebsiteModel websiteModel = readWebsiteModel(jsonLD);
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public WebsiteModel readWebsiteModel(String jsonLDWebsite){
         if(jsonLDWebsite!=null){
-
             try {
                 return objectMapper.readValue(jsonLDWebsite,WebsiteModel.class);
             } catch (IOException e) {
@@ -45,6 +61,8 @@ public class SchemaOrgAnalyzer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else {
+            LOGGER.error("Cant write json to file.");
         }
     }
 

@@ -10,10 +10,7 @@ import java.util.Map;
  * Created by ${Dennis} on 05.12.2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WebsiteModel {
-
-    @JsonProperty("@type")
-    private String type;
+public class WebsiteModel extends JsonLDType{
 
     @JsonProperty("@context")
     private String context;
