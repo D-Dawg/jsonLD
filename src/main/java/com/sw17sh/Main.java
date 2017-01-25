@@ -6,7 +6,7 @@ import com.sw17sh.model.WebsiteModel;
 
 public class Main {
     private static final String jsonFolder = "./src/main/java/com/sw17sh/json/";
-    private static String workingJsonLD = jsonFolder + "InputSearchActionJsonLD";
+    private static String workingJsonLD = jsonFolder + "InputSearchActionJsonLD.json";
     private static String saveNewJsonLD = jsonFolder + "ourWebsiteJson.json";
 
 

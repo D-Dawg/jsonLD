@@ -1,0 +1,48 @@
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "http://example.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "actionStatus": "PotentialActionStatus",
+    "target": "http://example.com/search?&q={query}",
+    "object": {
+      "@type": "Event",
+      "name": "",
+      "startDate-input": {
+        "@type": "PropertyValueSpecification",
+        "valueRequired": true,
+        "defaultValue": "2017-12-17T20:30:00"
+      },
+      "endDate-input": {
+        "@type": "PropertyValueSpecification",
+        "defaultValue": "2017-12-17T20:30:00",
+        "valueRequired": true
+      },
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality-input": {
+            "@type": "PropertyValueSpecification",
+            "valueRequired": true,
+            "defaultValue": "Innsbruck",
+            "valueName": "city"
+          },
+          "addressCountry-input": {
+            "@type": "PropertyValueSpecification",
+            "valueRequired": true,
+            "defaultValue": "Austria",
+            "valueName": "country"
+          }
+        }
+      }
+    },
+    "result-output": "required",
+    "query-input": {
+      "@type": "PropertyValueSpecification",
+      "valueRequired": true,
+      "valueName": "Event Name"
+    }
+  }
+}

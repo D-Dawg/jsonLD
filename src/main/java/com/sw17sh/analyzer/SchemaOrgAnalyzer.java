@@ -10,9 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * Created by denni on 1/25/2017.
- */
 public class SchemaOrgAnalyzer {
     private final Logger LOGGER = Logger.getLogger(Main.class);
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -31,10 +28,8 @@ public class SchemaOrgAnalyzer {
            JsonLDType jsonLDType = objectMapper.readValue(jsonLD,JsonLDType.class);
             if(jsonLDType != null){
                 String type = jsonLDType.getType();
-                switch(type){
-                    case "WebSite":
-                        WebsiteModel websiteModel = readWebsiteModel(jsonLD);
-                        break;
+                if (type.equals("WebSite")){
+                    WebsiteModel websiteModel = readWebsiteModel(jsonLD);
                 }
             }
         } catch (IOException e) {
