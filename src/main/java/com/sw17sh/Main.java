@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Main {
     private static String workingJsonLD = "./src/main/java/com/sw17sh/json/InputSearchActionJsonLD";
     private static final Logger LOGGER = Logger.getLogger(Main.class);
-
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     private static String getJsonLD(String filepath){
         try{
@@ -25,7 +25,7 @@ public class Main {
 
     private static WebsiteModel getWebsiteModel(String jsonLDWebsite){
         if(jsonLDWebsite!=null){
-            ObjectMapper objectMapper = new ObjectMapper();
+
             try {
                 return objectMapper.readValue(jsonLDWebsite,WebsiteModel.class);
             } catch (IOException e) {
@@ -41,7 +41,7 @@ public class Main {
         String jsonLD = getJsonLD(workingJsonLD);
         WebsiteModel websiteModel = getWebsiteModel(jsonLD);
         if(websiteModel!=null){
-            String stringWebsiteModelJson =
+
         }
 
 
