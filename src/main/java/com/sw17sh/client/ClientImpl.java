@@ -1,5 +1,7 @@
 package com.sw17sh.client;
 
+import com.sw17sh.util.Util;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.io.InputStreamReader;
  */
 public class ClientImpl {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private Util util = new Util();
 
     /**
      * Main method
@@ -23,7 +26,7 @@ public class ClientImpl {
                  * The Client is now fills out the form and sents the server back the
                  * FilledOutSearchActionJsonLD.json
                  */
-                System.out.println("The Server asks for Details about the Event you want to go.");
+                System.out.println("The Server asks for Details about the EventModel you want to go.");
                 String eventName = getEventName();
                 String filledOutSearchActionJsonLD = generateFilledOutSearchActionJsonLDFromInput(eventName);
                 response = requestEvents(filledOutSearchActionJsonLD);
@@ -37,10 +40,18 @@ public class ClientImpl {
     }
 
     private String generateFilledOutSearchActionJsonLDFromInput(String eventName){
+
+        String filledOutJsonLD = util.jsonFolder + "FilledOutSearchActionJsonLD.json";
         String filledOutSearchActionJsonLD = null;
         /**
          * read string from file!
          */
+        if(eventName.equals("XLETIX")){
+            filledOutSearchActionJsonLD = util.getJsonLD(filledOutJsonLD);
+        }
+        if(eventName.equals("EventModel 2")){
+            filledOutSearchActionJsonLD = util.getJsonLD("");
+        }
         return filledOutSearchActionJsonLD;
     }
 
@@ -55,13 +66,13 @@ public class ClientImpl {
     }
 
     private String getEventName(){
-        System.out.println("Whats the name of the Event?");
+        System.out.println("Whats the name of the EventModel?");
         return readInput();
     }
 
     private boolean startClient(){
         boolean start = false;
-        System.out.println("Hello, \n I am your new Event assistant. I will help you to find and book Events. \n You are ready to start? (y/n)");
+        System.out.println("Hello, \n I am your new EventModel assistant. I will help you to find and book Events. \n You are ready to start? (y/n)");
         String input = readInput();
         if(input!=null && input.equals("y")) {
             start = true;

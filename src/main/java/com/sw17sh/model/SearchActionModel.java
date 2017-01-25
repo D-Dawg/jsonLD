@@ -12,7 +12,7 @@ public class SearchActionModel extends JsonLDTypeModel {
     @JsonProperty(value = "target")
     public String target;
     @JsonProperty(value = "object")
-    public Event event;
+    public EventModel event;
     @JsonProperty(value = "result-output")
     public String resultOutput;
 

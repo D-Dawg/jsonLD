@@ -2,18 +2,20 @@ package com.sw17sh;
 
 import com.sw17sh.util.SchemaOrgAnalyzer;
 import com.sw17sh.model.WebsiteModel;
+import com.sw17sh.util.Util;
 
 
 public class Main {
-    private static final String jsonFolder = "./src/main/java/com/sw17sh/json/";
-    private static String workingJsonLD = jsonFolder + "InputSearchActionJsonLD.json";
-    private static String saveNewJsonLD = jsonFolder + "ourWebsiteJson.json";
 
 
     public static void main(String[] args) {
         SchemaOrgAnalyzer schemaOrgAnalyzer = new SchemaOrgAnalyzer();
+        Util util = new Util();
+        String workingJsonLD = util.jsonFolder + "FilledOutSearchActionJsonLD.json";
+        String saveNewJsonLD = util.jsonFolder + "ourWebsiteJson.json";
 
-        String jsonLD = schemaOrgAnalyzer.getJsonLD(workingJsonLD);
+
+        String jsonLD = util.getJsonLD(workingJsonLD);
         schemaOrgAnalyzer.readJsonLD(jsonLD);
         WebsiteModel websiteModel = schemaOrgAnalyzer.readWebsiteModel(jsonLD);
         schemaOrgAnalyzer.writeWebsiteModel(websiteModel,saveNewJsonLD);

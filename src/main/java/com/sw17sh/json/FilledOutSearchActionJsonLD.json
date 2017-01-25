@@ -9,7 +9,7 @@
     "result-output": "required",
     "object": {
       "@type": "Event",
-      "name": "",
+      "name": "XLETIX",
       "startDate": "2017-12-17T20:30:00",
       "endDate": "2017-12-17T20:30:00",
       "location": {

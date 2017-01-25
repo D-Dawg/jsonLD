@@ -12,7 +12,7 @@
     "result": {
       "@context": "http://www.schema.org",
       "@type": "SportsEvent",
-      "name": "Name",
+      "name": "XLETIX",
       "url": "https://www.eventbrite.de/e/xletix-challenge-tirol-2017-samstag-registrierung-28485362486",
       "startDate": "2017-01-10T12:00:00",
       "description": "Die XLETIX Challenge",

@@ -14,14 +14,7 @@ public class SchemaOrgAnalyzer {
     private final Logger LOGGER = Logger.getLogger(Main.class);
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public String getJsonLD(String filepath){
-        try{
-            return new Scanner(new File(filepath)).useDelimiter("\\Z").next();
-        }catch (IOException e){
-            LOGGER.error("Couldnt load file",e);
-        }
-        return null;
-    }
+
 
     public void readJsonLD(String jsonLD){
         try {

@@ -1,1 +1,28 @@
-{"@type":"WebSite","@context":"http://schema.org","url":"http://example.com/","potentialAction":{"@type":"SearchAction","actionStatus":"PotentialActionStatus","target":"http://example.com/search?&q={query}","object":{"@type":"Event","@context":null,"url":null,"potentialAction":null,"startDate":null,"endDate":null,"name":null,"location":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality-input":{"@type":"PropertyValueSpecification","valueRequired":"true","defaultValue":"Innsbruck","valueName":"city"},"addressCountry-input":{"@type":"PropertyValueSpecification","valueRequired":"true","defaultValue":"Austria","valueName":"country"}}}},"result-output":"required"}}
+{
+  "@type": "WebSite",
+  "@context": "http://schema.org",
+  "url": "http://example.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "actionStatus": "PotentialActionStatus",
+    "target": "http://example.com/search?&q={query}",
+    "object": {
+      "@type": "Event",
+      "@context": null,
+      "url": null,
+      "potentialAction": null,
+      "startDate": "2017-12-17T20:30:00",
+      "endDate": "2017-12-17T20:30:00",
+      "name": "",
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality-input": null,
+          "addressCountry-input": null
+        }
+      }
+    },
+    "result-output": "required"
+  }
+}
