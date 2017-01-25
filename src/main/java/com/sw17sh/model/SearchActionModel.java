@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-/**
- * Created by ${Dennis} on 05.12.2016.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchActionModel extends JsonLDTypeModel {
     @JsonProperty(value = "actionStatus")
@@ -18,19 +15,6 @@ public class SearchActionModel extends JsonLDTypeModel {
     public Event event;
     @JsonProperty(value = "result-output")
     public String resultOutput;
-    @JsonProperty(value = "startTime")
-    public String startTime;
-    @JsonProperty(value = "endTime")
-    public String endTime;
-    @JsonProperty(value = "query-input")
-    public PropertyValueSpecificationModel queryInput;
-    @JsonProperty(value = "location")
-    public Place location;
-
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Event extends JsonLDTypeModel {
-    }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Place extends JsonLDTypeModel {

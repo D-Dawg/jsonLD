@@ -1,0 +1,26 @@
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "http://example.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "actionStatus": "PotentialActionStatus",
+    "target": "http://example.com/search?&q={query}",
+    "object": {
+      "@type": "Event",
+      "name": "",
+      "startDate": "2017-12-17T20:30:00",
+      "endDate": "2017-12-17T20:30:00",
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Innsbruck",
+          "addressCountry": "Austria"
+        }
+      }
+    },
+    "result-output": "required"
+  }
+}
+

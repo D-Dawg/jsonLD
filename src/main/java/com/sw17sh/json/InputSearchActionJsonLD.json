@@ -6,9 +6,13 @@
     "@type": "SearchAction",
     "actionStatus": "PotentialActionStatus",
     "target": "http://example.com/search?&q={query}",
+    "result-output": "required",
     "object": {
       "@type": "Event",
-      "name": "",
+      "name-input": {
+        "@type": "PropertyValueSpecification",
+        "valueName": "Event Name"
+      },
       "startDate-input": {
         "@type": "PropertyValueSpecification",
         "valueRequired": true,
@@ -23,12 +27,14 @@
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
+
           "addressLocality-input": {
             "@type": "PropertyValueSpecification",
             "valueRequired": true,
             "defaultValue": "Innsbruck",
             "valueName": "city"
           },
+
           "addressCountry-input": {
             "@type": "PropertyValueSpecification",
             "valueRequired": true,
@@ -37,12 +43,6 @@
           }
         }
       }
-    },
-    "result-output": "required",
-    "query-input": {
-      "@type": "PropertyValueSpecification",
-      "valueRequired": true,
-      "valueName": "Event Name"
     }
   }
 }

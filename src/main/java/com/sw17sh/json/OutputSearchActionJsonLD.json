@@ -9,7 +9,6 @@
     "object": {
       "@type": "Event"
     },
-    "result-output": "required",
     "result": {
       "@context": "http://www.schema.org",
       "@type": "SportsEvent",
