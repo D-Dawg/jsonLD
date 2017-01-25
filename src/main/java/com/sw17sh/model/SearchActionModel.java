@@ -31,12 +31,6 @@ public class SearchActionModel {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class PropertyValueSpecification {
-        @JsonProperty(value = "valueName")
-        public String valueName;
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Place {
         @JsonProperty(value = "address")
         public PostalAddress address;
@@ -46,16 +40,14 @@ public class SearchActionModel {
             @JsonProperty(value = "addressLocality-input")
             public PropertyValueSpecification addressLocalityInput;
 
-            @JsonIgnoreProperties(ignoreUnknown = true)
-            public static class PropertyValueSpecification {
-                @JsonProperty(value = "defaultValue")
-                public String defaultValue;
-                @JsonProperty(value = "valueName")
-                public String valueName;
-
-            }
-
+            @JsonProperty(value = "addressCountry-input")
+            public PropertyValueSpecification addressCountryInput;
         }
+
+
+
+
+
 
 
     }

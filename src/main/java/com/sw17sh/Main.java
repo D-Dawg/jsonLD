@@ -41,7 +41,7 @@ public class Main {
         String jsonLD = getJsonLD(workingJsonLD);
         WebsiteModel websiteModel = getWebsiteModel(jsonLD);
         if(websiteModel!=null){
-
+            String stringWebsiteModelJson =
         }
 
 
