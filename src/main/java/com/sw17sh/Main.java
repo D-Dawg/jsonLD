@@ -41,7 +41,11 @@ public class Main {
         String jsonLD = getJsonLD(workingJsonLD);
         WebsiteModel websiteModel = getWebsiteModel(jsonLD);
         if(websiteModel!=null){
-
+            try {
+                objectMapper.writeValue(new File("./src/main/java/com/sw17sh/json/ourWebsiteJson.json"),websiteModel);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
