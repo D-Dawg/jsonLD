@@ -12,10 +12,16 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WebsiteModel {
 
-        @JsonProperty("url")
-        private String url;
+    @JsonProperty("@type")
+    private String type;
 
-        @JsonProperty(value = "potentialAction")
-        private SearchActionModel searchActionModel;
+    @JsonProperty("@context")
+    private String context;
+
+    @JsonProperty("url")
+    private String url;
+
+    @JsonProperty(value = "potentialAction")
+    private SearchActionModel searchActionModel;
 
 }

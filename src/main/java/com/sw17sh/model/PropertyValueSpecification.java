@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PropertyValueSpecification {
-
+    @JsonProperty("@type")
+    private String type;
     @JsonProperty(value = "valueRequired")
     public String valueRequired;
     @JsonProperty(value = "defaultValue")

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchActionModel {
+    @JsonProperty("@type")
+    private String type;
     @JsonProperty(value = "actionStatus")
     public String actionStatus;
     @JsonProperty(value = "target")
@@ -30,15 +32,21 @@ public class SearchActionModel {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Event {
+        @JsonProperty("@type")
+        private String type;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Place {
+        @JsonProperty("@type")
+        private String type;
         @JsonProperty(value = "address")
         public PostalAddress address;
 
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class PostalAddress {
+            @JsonProperty("@type")
+            private String type;
             @JsonProperty(value = "addressLocality-input")
             public PropertyValueSpecification addressLocalityInput;
 
