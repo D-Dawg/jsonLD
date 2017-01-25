@@ -16,6 +16,8 @@ public class SearchActionModel {
     public String target;
     @JsonProperty(value = "object")
     public Event event;
+    @JsonProperty(value = "result-output")
+    public String resultOutput;
     @JsonProperty(value = "startTime")
     public String startTime;
     @JsonProperty(value = "endTime")
