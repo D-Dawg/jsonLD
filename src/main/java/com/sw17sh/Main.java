@@ -1,5 +1,6 @@
 package com.sw17sh;
 
+import com.sw17sh.analyzer.SchemaOrgAnalyzer;
 import com.sw17sh.model.WebsiteModel;
 
 

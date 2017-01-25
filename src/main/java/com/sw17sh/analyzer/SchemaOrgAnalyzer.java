@@ -1,6 +1,7 @@
-package com.sw17sh;
+package com.sw17sh.analyzer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sw17sh.Main;
 import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.model.JsonLDType;
 import org.apache.log4j.Logger;
