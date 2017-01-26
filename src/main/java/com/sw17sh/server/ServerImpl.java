@@ -15,7 +15,7 @@ public class ServerImpl {
      * @return InputSearchActionJsonLD
      */
     private String service1InitialConnect(){
-        return util.getJsonLD(util.jsonFolder+"InputSearchActionJsonLD.json");
+        return util.getJsonLD(util.jsonFolder + "SearchActionSpecification.json");
 
     }
 

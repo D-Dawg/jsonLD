@@ -6,9 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by denni on 1/25/2017.
- */
 public class ClientImpl {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private Util util = new Util();
@@ -22,16 +19,16 @@ public class ClientImpl {
                 System.out.println("Connecting to Server");
                 String response = requestWebsite();
                 /**
-                 * The response is the InputSearchActionJsonLD.json
+                 * The response is the SearchActionSpecification.json
                  * The Client is now fills out the form and sents the server back the
-                 * FilledOutSearchActionJsonLD.json
+                 * SearchActionRequest.json
                  */
                 System.out.println("The Server asks for Details about the EventModel you want to go.");
                 String eventName = getEventName();
                 String filledOutSearchActionJsonLD = generateFilledOutSearchActionJsonLDFromInput(eventName);
                 response = requestEvents(filledOutSearchActionJsonLD);
                 /**
-                 * The Client creats the FilledOutSearchActionJsonLD.json and sends it back to the server.
+                 * The Client creats the SearchActionRequest.json and sends it back to the server.
                  * As a response it gets the SearchAction with filled out results, which is a List of Events.
                  */
 
@@ -41,7 +38,7 @@ public class ClientImpl {
 
     private String generateFilledOutSearchActionJsonLDFromInput(String eventName){
 
-        String filledOutJsonLD = util.jsonFolder + "FilledOutSearchActionJsonLD.json";
+        String filledOutJsonLD = util.jsonFolder + "SearchActionRequest.json";
         String filledOutSearchActionJsonLD = null;
         /**
          * read string from file!
@@ -86,7 +83,7 @@ public class ClientImpl {
 
         /**
          * Connect to server
-         * and get from it as a response of the connection get the InputSearchActionJsonLD.json
+         * and get from it as a response of the connection get the SearchActionSpecification.json
          */
         return response;
     }
@@ -97,7 +94,7 @@ public class ClientImpl {
 
         /**
          * Connect to server
-         * and get from it as a response of the connection get the InputSearchActionJsonLD.json
+         * and get from it as a response of the connection get the SearchActionSpecification.json
          */
         return response;
     }

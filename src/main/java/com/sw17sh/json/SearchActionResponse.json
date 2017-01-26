@@ -14,9 +14,14 @@
       "@type": "SportsEvent",
       "name": "XLETIX",
       "url": "https://www.eventbrite.de/e/xletix-challenge-tirol-2017-samstag-registrierung-28485362486",
-      "startDate": "2017-01-10T12:00:00",
       "description": "Die XLETIX Challenge",
       "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F24893148%2F174451750539%2F1%2Foriginal.jpg?w=800&rect=0%2C0%2C2160%2C1080&s=ea6873684f226aa4974bae81db83a9ae",
+      "organizer": {
+        "@type": "Organization",
+        "name": "XLETIX GmbH",
+        "url": "http://www.xletix.com/"
+      },
+      "startDate": "2017-07-27T12:00:00",
       "location": {
         "@type": "Place",
         "name": "Weltcuport Kühtai",
@@ -50,31 +55,10 @@
           }
         }
       ]
-    },
-    "startTime": "2017-12-17T20:30:00",
-    "endTime": "2017-12-18T20:30:00",
-    "query-input": {
-      "@type": "PropertyValueSpecification",
-      "valueRequired": false,
-      "valueName": "Event Name"
-    },
-    "location": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality-input": {
-          "@type": "PropertyValueSpecification",
-          "valueRequired": true,
-          "defaultValue": "Innsbruck",
-          "valueName": "city"
-        },
-        "addressCountry-input": {
-          "@type": "PropertyValueSpecification",
-          "valueRequired": true,
-          "defaultValue": "Austria",
-          "valueName": "country"
-        }
-      }
     }
   }
 }
+
+
+
+

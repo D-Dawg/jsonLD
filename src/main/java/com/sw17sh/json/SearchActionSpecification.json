@@ -1,11 +1,11 @@
 {
   "@context": "http://schema.org",
   "@type": "WebSite",
-  "url": "http://example.com/",
+  "url": "http://eventbrite.com/",
   "potentialAction": {
     "@type": "SearchAction",
     "actionStatus": "PotentialActionStatus",
-    "target": "http://example.com/search?&q={query}",
+    "target": "http://eventbrite.com/search",
     "result-output": "required",
     "object": {
       "@type": "Event",
@@ -15,13 +15,11 @@
       },
       "startDate-input": {
         "@type": "PropertyValueSpecification",
-        "valueRequired": true,
-        "defaultValue": "2017-12-17T20:30:00"
+        "valueName": "Start Date"
       },
       "endDate-input": {
         "@type": "PropertyValueSpecification",
-        "defaultValue": "2017-12-17T20:30:00",
-        "valueRequired": true
+        "valueName": "End Date"
       },
       "location": {
         "@type": "Place",
