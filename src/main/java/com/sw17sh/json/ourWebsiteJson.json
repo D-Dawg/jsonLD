@@ -1,19 +1,19 @@
 {
   "@type": "WebSite",
   "@context": "http://schema.org",
-  "url": "http://example.com/",
+  "url": "http://eventbrite.com/",
   "potentialAction": {
     "@type": "SearchAction",
     "actionStatus": "PotentialActionStatus",
-    "target": "http://example.com/search?&q={query}",
+    "target": "http://eventbrite.com/search",
     "object": {
       "@type": "Event",
       "@context": null,
       "url": null,
+      "name": "XLETIX",
       "potentialAction": null,
-      "startDate": "2017-12-17T20:30:00",
-      "endDate": "2017-12-17T20:30:00",
-      "name": "",
+      "startDate": "",
+      "endDate": "",
       "location": {
         "@type": "Place",
         "address": {

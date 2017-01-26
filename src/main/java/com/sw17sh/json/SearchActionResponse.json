@@ -1,96 +1,124 @@
 {
   "@context": "http://schema.org",
-  "@type": "WebSite",
-  "url": "http://example.com/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "actionStatus": "CompletedActionStatus",
-    "target": "http://example.com/search?&q={query}",
-    "object": {
-      "@type": "Event"
+  "@type": "SearchAction",
+  "actionStatus": "CompletedActionStatus",
+  "target": "http://example.com/search?&q={query}",
+  "object": {
+    "@type": "Event"
+  },
+  "result": {
+    "@context": "http://www.schema.org",
+    "@type": "SportsEvent",
+    "name": "XLETIX",
+    "url": "https://www.eventbrite.de/e/xletix-challenge-tirol-2017-samstag-registrierung-28485362486",
+    "description": "Die XLETIX Challenge",
+    "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F24893148%2F174451750539%2F1%2Foriginal.jpg?w=800&rect=0%2C0%2C2160%2C1080&s=ea6873684f226aa4974bae81db83a9ae",
+    "organizer": {
+      "@type": "Organization",
+      "id": "www.ID.XLETIX.Organization.com",
+      "name": "XLETIX GmbH",
+      "url": "http://www.xletix.com/"
     },
-    "result": {
-      "@context": "http://www.schema.org",
-      "@type": "SportsEvent",
-      "name": "XLETIX",
-      "url": "https://www.eventbrite.de/e/xletix-challenge-tirol-2017-samstag-registrierung-28485362486",
-      "description": "Die XLETIX Challenge",
-      "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F24893148%2F174451750539%2F1%2Foriginal.jpg?w=800&rect=0%2C0%2C2160%2C1080&s=ea6873684f226aa4974bae81db83a9ae",
-      "organizer": {
-        "@type": "Organization",
-        "id": "www.ID.XLETIX.Organization.com",
-        "name": "XLETIX GmbH",
-        "url": "http://www.xletix.com/"
-      },
-      "startDate": "2017-07-27T12:00:00",
-      "location": {
-        "@type": "Place",
-        "name": "Weltcuport Kühtai",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "10 Kühtai",
-          "addressLocality": "Kühtai",
-          "addressRegion": "Tirol",
-          "postalCode": "6183"
-        }
-      },
-      "offers": [
-        {
-          "@type": "Offer",
-          "id": "www.ID.Offer.S.XLETIX.com",
-          "name": "S-Distanz",
-          "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+    "startDate": "2017-07-27T12:00:00",
+    "location": {
+      "@type": "Place",
+      "name": "Weltcuport Kühtai",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "10 Kühtai",
+        "addressLocality": "Kühtai",
+        "addressRegion": "Tirol",
+        "postalCode": "6183"
+      }
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "id": "www.ID.Offer.S.XLETIX.com",
+        "name": "S-Distanz",
+        "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+        "includesObject": {
+          "@type": "TypeAndQuantityNode",
+          "amountOfThisGood": "",
+          "typeOfGood": {
+            "@type": [
+              "Ticket",
+              "Product"
+            ]
+          }
+        },
+        "priceSpecification": {
+          "@id": "www.ID.PriceSpecification.Offer.S.XLETIX.com"
+        },
+        "potentialAction": {
+          "@type": "Buyaction",
+          "object": {
+            "@id": "www.ID.Offer.S.XLETIX.com"
+          },
+          "seller": {
+            "@id": "www.ID.XLETIX.Organization.com"
+          },
+          "actionStatus": "PotentialActionStatus",
+          "entrypoint": "www.oururl.com",
           "priceSpecification": {
             "@type": "priceSpecification",
             "id": "www.ID.PriceSpecification.Offer.S.XLETIX.com",
             "price": "54",
             "priceCurrency": "EU"
           },
-          "potentialAction": {
-            "@type": "Buyaction",
-            "actionStatus": "PotentialActionStatus",
-            "seller": {
+          "result": {
+            "@type": "Ticket",
+            "underName": "",
+            "issuedBy": {
               "@id": "www.ID.XLETIX.Organization.com"
-            },
-            "object": {
-              "@id": "www.ID.Offer.S.XLETIX.com"
-            },
-            "entrypoint": "www.oururl.com",
-            "priceSpecification": {
-              "@id": "www.ID.PriceSpecification.Offer.S.XLETIX.com"
-            },
-            "result": ""
-          }
-        },
-        {
-          "@type": "Offer",
-          "id": "www.ID.Offer.M.XLETIX.com",
-          "name": "M-Distanz",
-          "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
-          "priceSpecification": {
-            "@type": "priceSpecification",
-            "price": "64",
-            "priceCurrency": "EU"
-          },
-          "potentialAction": {
-            "@type": "Buyaction",
-            "actionStatus": "PotentialActionStatus",
-            "seller": {
-              "@id": "www.ID.XLETIX.Organization.com"
-            },
-            "object": {
-              "@id": "www.ID.Offer.M.XLETIX.com"
-            },
-            "entrypoint": "www.oururl.com",
-            "priceSpecification": {
-              "@type": "priceSpecification",
-              "price": "64",
-              "priceCurrency": "EU"
             }
           }
         }
-      ]
-    }
+      },
+      {
+        "@type": "Offer",
+        "id": "www.ID.Offer.M.XLETIX.com",
+        "name": "M-Distanz",
+        "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+        "includesObject": {
+          "@type": "TypeAndQuantityNode",
+          "amountOfThisGood": "",
+          "typeOfGood": {
+            "@type": [
+              "Ticket",
+              "Product"
+            ]
+          }
+        },
+        "priceSpecification": {
+          "@type": "priceSpecification",
+          "id": "www.ID.PriceSpecification.Offer.M.XLETIX.com",
+          "price": "54",
+          "priceCurrency": "EU"
+        },
+        "potentialAction": {
+          "@type": "Buyaction",
+          "object": {
+            "@id": "www.ID.Offer.M.XLETIX.com"
+          },
+          "seller": {
+            "@id": "www.ID.XLETIX.Organization.com"
+          },
+          "actionStatus": "PotentialActionStatus",
+          "entrypoint": "www.oururl.com",
+          "priceSpecification": {
+            "@id": "www.ID.PriceSpecification.Offer.M.XLETIX.com"
+          },
+          "result": {
+            "@type": "Ticket",
+            "underName": "",
+            "issuedBy": {
+              "@id": "www.ID.XLETIX.Organization.com"
+            }
+          }
+        }
+      }
+    ]
   }
 }
 

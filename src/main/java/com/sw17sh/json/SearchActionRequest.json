@@ -1,9 +1,6 @@
 {
   "@context": "http://schema.org",
-  "@type": "WebSite",
-  "url": "http://eventbrite.com/",
-  "potentialAction": {
-    "@type": "SearchAction",
+  "@type": "SearchAction",
     "actionStatus": "PotentialActionStatus",
     "target": "http://eventbrite.com/search",
     "result-output": "required",
@@ -22,5 +19,5 @@
       }
     }
   }
-}
+
 
