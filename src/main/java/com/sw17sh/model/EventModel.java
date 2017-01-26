@@ -13,6 +13,9 @@ public class EventModel extends JsonLDTypeModel {
     @JsonProperty("url")
     private String url;
 
+    @JsonProperty(value = "name")
+    public String name;
+
     @JsonProperty(value = "potentialAction")
     private SearchActionModel searchActionModel;
 
@@ -21,9 +24,6 @@ public class EventModel extends JsonLDTypeModel {
 
     @JsonProperty(value = "endDate")
     public String endDate;
-
-    @JsonProperty(value = "name")
-    public String name;
 
     @JsonProperty(value = "location")
     public SearchActionModel.Place location;

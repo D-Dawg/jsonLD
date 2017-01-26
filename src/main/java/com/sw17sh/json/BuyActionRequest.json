@@ -4,8 +4,9 @@
   "url": "http://example.com/",
   "potentialAction": {
     "@type": "BuyAction",
-    "actionStatus": "CompletedActionStatus",
+    "actionStatus": "PotentialActionStatus",
     "target": "http://example.com/buy",
+    "result-output": "required",
     "seller": {
       "@type": "Organization",
       "name": "XLETIX GmbH",
@@ -23,8 +24,7 @@
           "addressCountry": "Austria"
         }
       }
-    },
-    "result": "List of Tickets!!!!"
+    }
   }
 }
 

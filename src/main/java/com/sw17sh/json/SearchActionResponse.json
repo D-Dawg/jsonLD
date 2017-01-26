@@ -18,6 +18,7 @@
       "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F24893148%2F174451750539%2F1%2Foriginal.jpg?w=800&rect=0%2C0%2C2160%2C1080&s=ea6873684f226aa4974bae81db83a9ae",
       "organizer": {
         "@type": "Organization",
+        "id": "www.ID.XLETIX.Organization.com",
         "name": "XLETIX GmbH",
         "url": "http://www.xletix.com/"
       },
@@ -36,22 +37,56 @@
       "offers": [
         {
           "@type": "Offer",
-          "description": "S-Distanz",
-          "url": "8",
-          "price": "54",
+          "id": "www.ID.Offer.S.XLETIX.com",
+          "name": "S-Distanz",
+          "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+          "priceSpecification": {
+            "@type": "priceSpecification",
+            "id": "www.ID.PriceSpecification.Offer.S.XLETIX.com",
+            "price": "54",
+            "priceCurrency": "EU"
+          },
           "potentialAction": {
             "@type": "Buyaction",
-            "entrypoint": "www.oururl.com"
+            "actionStatus": "PotentialActionStatus",
+            "seller": {
+              "@id": "www.ID.XLETIX.Organization.com"
+            },
+            "object": {
+              "@id": "www.ID.Offer.S.XLETIX.com"
+            },
+            "entrypoint": "www.oururl.com",
+            "priceSpecification": {
+              "@id": "www.ID.PriceSpecification.Offer.S.XLETIX.com"
+            },
+            "result": ""
           }
         },
         {
           "@type": "Offer",
-          "description": "M-Distanz",
-          "url": "8",
-          "price": "64",
+          "id": "www.ID.Offer.M.XLETIX.com",
+          "name": "M-Distanz",
+          "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+          "priceSpecification": {
+            "@type": "priceSpecification",
+            "price": "64",
+            "priceCurrency": "EU"
+          },
           "potentialAction": {
             "@type": "Buyaction",
-            "entrypoint": "www.oururl.com"
+            "actionStatus": "PotentialActionStatus",
+            "seller": {
+              "@id": "www.ID.XLETIX.Organization.com"
+            },
+            "object": {
+              "@id": "www.ID.Offer.M.XLETIX.com"
+            },
+            "entrypoint": "www.oururl.com",
+            "priceSpecification": {
+              "@type": "priceSpecification",
+              "price": "64",
+              "priceCurrency": "EU"
+            }
           }
         }
       ]
