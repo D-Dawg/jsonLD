@@ -8,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WebsiteModel extends JsonLDTypeModel {
 
     @JsonProperty("@context")
-    private String context;
+    public String context;
 
     @JsonProperty("url")
-    private String url;
+    public String url;
 
     @JsonProperty(value = "potentialAction")
-    private SearchActionModel searchActionModel;
+    public SearchActionModel searchActionModel;
 
 }

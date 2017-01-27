@@ -25,7 +25,7 @@ public class SearchActionModel extends JsonLDTypeModel {
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class PostalAddress extends JsonLDTypeModel {
             @JsonProperty("@type")
-            private String type;
+            public String type;
             @JsonProperty(value = "addressLocality-input")
             public PropertyValueSpecificationModel addressLocalityInput;
 

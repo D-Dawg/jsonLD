@@ -25,14 +25,12 @@
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
-
           "addressLocality-input": {
             "@type": "PropertyValueSpecification",
             "valueRequired": true,
             "defaultValue": "Innsbruck",
             "valueName": "city"
           },
-
           "addressCountry-input": {
             "@type": "PropertyValueSpecification",
             "valueRequired": true,
