@@ -50,7 +50,7 @@ public class Util {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return input;
+        return input; 
     }
 
     public String getJsonLDModelType(String jsonLD){
