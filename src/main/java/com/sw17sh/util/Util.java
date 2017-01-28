@@ -1,5 +1,10 @@
 package com.sw17sh.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sw17sh.model.JsonLDTypeModel;
+import com.sw17sh.model.WebsiteModel;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -7,16 +12,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.WebsiteModel;
-import org.apache.log4j.Logger;
 
-
-
-/**
- * Created by denni on 1/25/2017.
- */
 public class Util {
     public  final String jsonFolder = "./src/main/java/com/sw17sh/json/";
     private final Logger LOGGER = Logger.getLogger(Util.class);
@@ -43,14 +39,14 @@ public class Util {
         return start;
     }
 
-    public String readInput(){
+    private String readInput() {
         String input = null;
         try {
             input = reader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return input;
+        return input; 
     }
 
     public String getJsonLDModelType(String jsonLD){
@@ -67,6 +63,7 @@ public class Util {
 
     public JsonLDTypeModel getjsonLDModel(String jsonLD){
         JsonLDTypeModel jsonLDModel = null;
+
         String jsonLDtype = getJsonLDModelType(jsonLD);
         if (jsonLDtype.equals("WebSite")){
             jsonLDModel = readWebsiteModel(jsonLD);
@@ -74,7 +71,7 @@ public class Util {
         return jsonLDModel;
     }
 
-    public WebsiteModel readWebsiteModel(String jsonLDWebsite){
+    private WebsiteModel readWebsiteModel(String jsonLDWebsite) {
         if(jsonLDWebsite!=null){
             try {
                 return objectMapper.readValue(jsonLDWebsite,WebsiteModel.class);

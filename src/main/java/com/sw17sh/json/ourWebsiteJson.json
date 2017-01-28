@@ -1,28 +1,6 @@
 {
-  "@type": "WebSite",
+  "@type": "SearchAction",
   "@context": "http://schema.org",
-  "url": "http://eventbrite.com/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "actionStatus": "PotentialActionStatus",
-    "target": "http://eventbrite.com/search",
-    "object": {
-      "@type": "Event",
-      "@context": null,
-      "url": null,
-      "name": "XLETIX",
-      "potentialAction": null,
-      "startDate": "",
-      "endDate": "",
-      "location": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality-input": null,
-          "addressCountry-input": null
-        }
-      }
-    },
-    "result-output": "required"
-  }
+  "url": null,
+  "potentialAction": null
 }
