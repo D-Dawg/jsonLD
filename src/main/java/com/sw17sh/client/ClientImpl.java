@@ -11,7 +11,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-
+/**
+ * Created by denni on 1/25/2017.
+ */
 public class ClientImpl {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private Util util = new Util();

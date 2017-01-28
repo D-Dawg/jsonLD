@@ -1,6 +1,7 @@
 package com.sw17sh.client;
 
 import com.sw17sh.model.JsonLDTypeModel;
+import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -11,6 +12,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+/**
+ * Created by denni on 1/25/2017.
+ */
 
 
 public class JsonLDClient {
@@ -23,12 +28,12 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
 
 
-    private String getTextFromDataField() {
+    private String getTextFromDataField(){
 //        dataField.addActionListener();
         return null;
     }
 
-    private JsonLDClient() {
+    public JsonLDClient() {
 
         // Layout GUI
         messageArea.setEditable(false);
@@ -40,12 +45,12 @@ public class JsonLDClient {
 
             public void actionPerformed(ActionEvent e) {
                 String dataFieldInput = dataField.getText();
-                if (currentModelFromServer.getType().equals("WebSite")) {
-                    String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n", "");
+                if(currentModelFromServer.getType().equals("WebSite")){
+                    String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
                     out.println(filledOutSearchAction);
                     messageArea.append(dataFieldInput + "\n");
-                    messageArea.append("Send the filled out searchActionJson back to the server." + "\n");
-                } else {
+                    messageArea.append("Send the filled out searchActionJson back to the server."+ "\n");
+                }else{
                     out.println(dataField.getText());
                     String response;
                     try {
@@ -64,7 +69,7 @@ public class JsonLDClient {
     }
 
 
-    private void connectToServer() throws IOException {
+    public void connectToServer() throws IOException {
 
         // Get the server address from a dialog box.
         String serverAddress = JOptionPane.showInputDialog(
@@ -81,28 +86,20 @@ public class JsonLDClient {
 
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
-        StringBuilder jsonInputStringBuilder = new StringBuilder();
-        String line;
-        //need a line not empty test ?
-        while ((line = in.readLine()) != null && !line.equals("}")) {
-            jsonInputStringBuilder.append(line);
-            System.out.println(line);
-        }
-        // final } used for termination of data sending from client
-        jsonInputStringBuilder.append("}");
-        String jsonSearchAction = jsonInputStringBuilder.toString();
-        currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
-        messageArea.append("The Server sent a JsonLD Annotation of the website, which contains a SearchAction" + "\n");
-        messageArea.append(jsonSearchAction + "\n");
-        messageArea.append("Whats the name of the event you want to go to?" + "\n");
+        String jsonSearchAction = in.readLine();
+        currentModelFromServer = (WebsiteModel) util.getjsonLDModel(jsonSearchAction);
+        messageArea.append("The Server send an WebsiteJson containing a SearchAction"+ "\n");
+        messageArea.append(jsonSearchAction+ "\n");
+        messageArea.append("Whats the name of the event you want to go to?"+ "\n");
         String input = null;
 //        String input = util.readInput();
 
 
+
     }
 
-    private String generateFilledOutSearchActionJsonLD(String searchInput) {
-        String filledOutSearchAction = util.getJsonLD(util.jsonFolder + "FilledOutSearchActionJsonLD.json");
+    private String generateFilledOutSearchActionJsonLD(String searchInput){
+        String filledOutSearchAction = util.getJsonLD(util.jsonFolder+"SearchActionRequest.json");
         /**
          * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
          * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
@@ -115,7 +112,7 @@ public class JsonLDClient {
      */
     public static void main(String[] args) throws Exception {
         JsonLDClient client = new JsonLDClient();
-        client.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         client.frame.pack();
         client.frame.setVisible(true);
         client.connectToServer();

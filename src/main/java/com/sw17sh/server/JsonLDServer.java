@@ -1,6 +1,7 @@
 package com.sw17sh.server;
 
 
+import com.sw17sh.model.JsonLDTypeModel;
 import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
@@ -11,7 +12,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * Created by denni on 1/25/2017.
+ */
 public class JsonLDServer {
 
 
@@ -76,7 +79,7 @@ public class JsonLDServer {
                         break;
                     }
                     String modelType = util.getJsonLDModelType(input);
-                    if(modelType.equals("WebSite")){
+                    if(modelType.equals("SearchAction")){
                         System.out.println("The Client send a "+modelType+"json with a filled out SearchAction back.");
                         System.out.println(input);
                         System.out.println("Starting Search for events that match.");
@@ -85,7 +88,7 @@ public class JsonLDServer {
 
                         }
                     }else {
-                        out.println("Error not a matching json model found. ");
+                        out.println("Error not a matching json model found.");
                     }
 
 
