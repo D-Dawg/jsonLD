@@ -4,9 +4,7 @@ package com.sw17sh.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by ${Dennis} on 05.12.2016.
- */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JsonLDTypeModel  {
 

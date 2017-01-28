@@ -1,7 +1,6 @@
 package com.sw17sh.client;
 
 import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -13,9 +12,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Created by denni on 1/25/2017.
- */
 
 
 public class JsonLDClient {
@@ -33,7 +29,7 @@ public class JsonLDClient {
     return null;
     }
 
-    public JsonLDClient() {
+    private JsonLDClient() {
 
         // Layout GUI
         messageArea.setEditable(false);
@@ -69,7 +65,7 @@ public class JsonLDClient {
     }
 
 
-    public void connectToServer() throws IOException {
+    private void connectToServer() throws IOException {
 
         // Get the server address from a dialog box.
         String serverAddress = JOptionPane.showInputDialog(
@@ -87,8 +83,8 @@ public class JsonLDClient {
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
         String jsonSearchAction = in.readLine();
-        currentModelFromServer = (WebsiteModel) util.getjsonLDModel(jsonSearchAction);
-        messageArea.append("The Server send an WebsiteJson containing a SearchAction"+ "\n");
+        currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
+        messageArea.append("The Server sent a JsonLD Annotation of the website, which contains a SearchAction" + "\n");
         messageArea.append(jsonSearchAction+ "\n");
         messageArea.append("Whats the name of the event you want to go to?"+ "\n");
         String input = null;
@@ -112,7 +108,7 @@ public class JsonLDClient {
      */
     public static void main(String[] args) throws Exception {
         JsonLDClient client = new JsonLDClient();
-        client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        client.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         client.frame.pack();
         client.frame.setVisible(true);
         client.connectToServer();

@@ -1,7 +1,6 @@
 package com.sw17sh.server;
 
 
-import com.sw17sh.model.JsonLDTypeModel;
 import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
@@ -12,9 +11,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * Created by denni on 1/25/2017.
- */
+
 public class JsonLDServer {
 
 
