@@ -39,15 +39,15 @@ public class JsonLDClient {
         messageArea.append(searchActionRequest);
 
         //read SearchActionResponse
-        String response = util.readInputJsonLDScript(in);
+        String response = util.readInputJsonLDScriptNotWaitingInput(in);
         messageArea.append("Receive Search Action Response:" + "\n" + "\n");
         messageArea.append(response + "\n" + "\n");
 
         //Send BuyactionRequest
-            String buyActionRequest = generateFilledOutBuyActionJsonLD(response);
+        String buyActionRequest = generateFilledOutBuyActionJsonLD(response);
         messageArea.append("Send Buy Action Request:" + "\n" + "\n");
         messageArea.append(buyActionRequest + "\n" + "\n");
-            out.println(buyActionRequest);
+        out.println(buyActionRequest);
 
         //read and print BuyActionResponse
         response = util.readInputJsonLDScript(in);
@@ -118,29 +118,13 @@ public class JsonLDClient {
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
 
+        //Read and Print SeachArctionSpecification
+        messageArea.append("\nReceive Search Action Specification:" + "\n");
+        String jsonSearchAction = util.readInputJsonLDScriptNotWaitingInput(in);
+        messageArea.append(jsonSearchAction + "\n" + "\n");
 
-        StringBuilder jsonInputStringBuilder = new StringBuilder();
-        String line = in.readLine();
-        System.out.println();
-        //need a line not empty test ?
-        while (line != null && !line.equals("}") && !line.equals("")) {
-            jsonInputStringBuilder.append(line + "\n");
-            System.out.println(line);
-            line = in.readLine();
-            System.out.println();
-        }
-        // final } used for termination of data sending from client
-        jsonInputStringBuilder.append("}");
-        String jsonSearchAction = jsonInputStringBuilder.toString();
-
-
-        messageArea.append("Receive Search Action Specification" + "\n");
-        messageArea.append(jsonSearchAction + "\n");
-
-        currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n"
-
-        );
-        messageArea.append("Whats the name of the event you want to go to?" + "\n");
+        currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n");
+        messageArea.append("Whats the name of the event you want to go to?" + "\n" + "\n");
 
     }
 
@@ -167,7 +151,7 @@ public class JsonLDClient {
      */
     public static void main(String[] args) throws Exception {
         JsonLDClient client = new JsonLDClient();
-        client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        client.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         client.frame.pack();
         client.frame.setVisible(true);
         client.connectToServer();

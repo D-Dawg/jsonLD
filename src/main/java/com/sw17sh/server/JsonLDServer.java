@@ -14,7 +14,6 @@ import java.net.Socket;
 public class JsonLDServer {
 
 
-
     public static void main(String[] args) throws Exception {
         System.out.println("The JsonLD Event server is now running.");
         int clientNumber = 0;
@@ -56,7 +55,7 @@ public class JsonLDServer {
             }
         }
 
-        private void processSeachActionModel(String input, String modelType, PrintWriter out){
+        private void processSeachActionModel(String input, String modelType, PrintWriter out) {
             System.out.println("The Client send a " + modelType + "json.");
             System.out.println(input);
             System.out.println("Server processes SearchAction");
@@ -104,45 +103,15 @@ public class JsonLDServer {
                 out.println(webSiteJsonLD);
 
 
-                StringBuilder jsonInputStringBuilder = new StringBuilder();
-                String line;
-
                 //read SearchActionRequest
-                line = in.readLine();
-                while (line != null && !line.equals("") && !line.equals("}")) {
-                    jsonInputStringBuilder.append(line);
-                    System.out.println(line);
-                    line = in.readLine();
-                    System.out.println();
-                }
-                boolean test = jsonInputStringBuilder.length() != 0;
-                // final } used for termination of data sending from client
-                if (jsonInputStringBuilder.length() != 0) {
-                    jsonInputStringBuilder.append("}");
-                }
+                String input = util.readInputJsonLDScriptNotWaitingInput(in);
 
-                String input = jsonInputStringBuilder.toString();
+                //process and send Search response
+                processJsomModel(input, out);
 
-                processJsomModel(input,out);
-
-                jsonInputStringBuilder = new StringBuilder();
-
-                //read BuyActionRequest
-                line = in.readLine();
-                while (line != null && !line.equals("}")) {
-                    jsonInputStringBuilder.append(line);
-                    System.out.println(line);
-                    line = in.readLine();
-                    System.out.println();
-                }
-
-                // final } used for termination of data sending from client
-                if (jsonInputStringBuilder.length() != 0) {
-                    jsonInputStringBuilder.append("}");
-                }
-
-                input = jsonInputStringBuilder.toString();
-
+                //read BuyActionResponse
+                input = util.readInputJsonLDScript(in);
+                //process and send response
                 processJsomModel(input, out);
 
 
@@ -186,4 +155,5 @@ public class JsonLDServer {
         }
     }
 
+    ///tresdfg s
 }
