@@ -32,9 +32,9 @@ public class JsonLDClient {
         String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
         out.println(filledOutSearchAction);
         messageArea.append(dataFieldInput + "\n");
-        messageArea.append("Send a filled out searchAction JsonLD back to the server:" + "\n");
+        messageArea.append("Send Search Action Request:" + "\n");
         messageArea.append(filledOutSearchAction);
-        messageArea.append("Receives completed SearchAction with response from server:" + "\n");
+        messageArea.append("Receive Search Action Response:" + "\n");
         try {
             StringBuilder jsonInputStringBuilder = new StringBuilder();
             String line = in.readLine();
@@ -47,17 +47,50 @@ public class JsonLDClient {
                 System.out.println();
             }
             // final } used for termination of data sending from client
-            jsonInputStringBuilder.append("}");
+            if (jsonInputStringBuilder.length() != 0) {
+                jsonInputStringBuilder.append("}");
+            }
             String response = jsonInputStringBuilder.toString();
 
+            messageArea.append(response + "\n");
+
+            String buyActionRequest = generateFilledOutBuyActionJsonLD(response);
+
+            messageArea.append("Send Buy Action Request:" + "\n");
+            messageArea.append(buyActionRequest + "\n");
+            out.println(buyActionRequest);
+
+
+            jsonInputStringBuilder = new StringBuilder();
+
+            //read the BuyActionResponse
+            line = in.readLine();
+            System.out.println();
+
+            while (line != null && !line.equals("}")) {
+                jsonInputStringBuilder.append(line);
+                System.out.println(line);
+                line = in.readLine();
+                System.out.println();
+            }
+
+            // final } used for termination of data sending from client
+            if (jsonInputStringBuilder.length() != 0) {
+                jsonInputStringBuilder.append("}");
+            }
+            response = jsonInputStringBuilder.toString();
+
+            messageArea.append("Receive Buy Action Response back:" + "\n");
 
             messageArea.append(response + "\n");
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        //TODO implement reading of server input and buy action
+        //TODO implement buy action
 
     }
 
@@ -122,7 +155,7 @@ private void  processJsonModel(String dataFieldInput){
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
 
-        StringBuilder jsonInputStringBuilder = new StringBuilder();
+ /*       StringBuilder jsonInputStringBuilder = new StringBuilder();
         String line = in.readLine();
         System.out.println();
         //need a line not empty test ?
@@ -134,10 +167,10 @@ private void  processJsonModel(String dataFieldInput){
         }
         // final } used for termination of data sending from client
         jsonInputStringBuilder.append("}");
-             String jsonSearchAction = jsonInputStringBuilder.toString();
+             String jsonSearchAction = jsonInputStringBuilder.toString();*/
 
 
-//        String jsonSearchAction = in.readLine();
+        String jsonSearchAction = in.readLine();
 
 
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
@@ -156,6 +189,14 @@ private void  processJsonModel(String dataFieldInput){
         return filledOutSearchAction;
     }
 
+    private String generateFilledOutBuyActionJsonLD(String buyInput) {
+        String buyActionRequest = util.getJsonLD(util.jsonFolder + "BuyActionRequest.json");
+        /**
+         * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+         * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+         */
+        return buyActionRequest;
+    }
 
     /**
      * Runs the client application.

@@ -7,7 +7,7 @@
   "seller": {
     "@id": "www.ID.XLETIX.Organization.com"
   },
-  "actionStatus": "PotentialActionStatus",
+  "actionStatus": "CompletedActionStatus",
   "entrypoint": "www.oururl.com",
   "priceSpecification": {
     "@type": "priceSpecification",

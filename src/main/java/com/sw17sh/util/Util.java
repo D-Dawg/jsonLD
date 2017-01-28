@@ -116,6 +116,4 @@ public class Util {
         }
         return modelAsJson;
     }
-
-
 }

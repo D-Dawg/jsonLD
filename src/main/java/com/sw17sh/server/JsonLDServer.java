@@ -10,10 +10,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * Created by denni on 1/25/2017.
- */
+
 public class JsonLDServer {
+
 
 
     public static void main(String[] args) throws Exception {
@@ -45,30 +44,42 @@ public class JsonLDServer {
             log("New connection with client# " + clientNumber + " at " + socket);
         }
 
+
+        private void processJsomModel(String input, PrintWriter out) {
+            String modelType = util.getJsonLDModelType(input);
+            if (modelType.equals("SearchAction")) {
+                processSeachActionModel(input, modelType, out);
+            } else if (modelType.equals("BuyAction")) {
+                processBuyActionModel(input, modelType, out);
+            } else {
+                out.println("Error not a matching json model found.");
+            }
+        }
+
         private void processSeachActionModel(String input, String modelType, PrintWriter out){
-            System.out.println("The Client send a " + modelType + "json with a filled out SearchAction back.");
+            System.out.println("The Client send a " + modelType + "json.");
             System.out.println(input);
-            System.out.println("Starting Search for events that match.");
+            System.out.println("Server processes SearchAction");
             System.out.println();
             System.out.println("Server sends SearchAction  with response back:");
 
             String searchActionResponse = generateSearchActionResponseJsonLD(input);
             System.out.println(searchActionResponse);
             out.println(searchActionResponse);
-            //   SearchActionModel searchActionModel = (SearchActionModel) util.getjsonLDModel(input);
-            //if(searchActionModel!=null){
-            //System.out.println(searchActionModel);
+
         }
 
-        private void processJsomModel(String input, PrintWriter out){
-            String modelType = util.getJsonLDModelType(input);
-            if (modelType.equals("SearchAction")) {
-               processSeachActionModel(input,modelType,out);
-            } else {
-                out.println("Error not a matching json model found.");
-            }
-        }
+        private void processBuyActionModel(String input, String modelType, PrintWriter out) {
+            System.out.println("The Client send a " + modelType + ".");
+            System.out.println(input);
+            System.out.println("Server processes BuyAction");
+            System.out.println();
+            System.out.println("Server sends BuyAction Response:");
 
+            String searchActionResponse = generateBuyActionResponseJsonLD(input);
+            System.out.println(searchActionResponse);
+            out.println(searchActionResponse);
+        }
 
 
         /**
@@ -95,9 +106,9 @@ public class JsonLDServer {
 
                 StringBuilder jsonInputStringBuilder = new StringBuilder();
                 String line;
-                //need a line not empty test ?
+
+                //read SearchActionRequest
                 line = in.readLine();
-                String hallo = "";
                 while (line != null && !line.equals("") && !line.equals("}")) {
                     jsonInputStringBuilder.append(line);
                     System.out.println(line);
@@ -114,6 +125,25 @@ public class JsonLDServer {
 
                 processJsomModel(input,out);
 
+                jsonInputStringBuilder = new StringBuilder();
+
+                //read BuyActionRequest
+                line = in.readLine();
+                while (line != null && !line.equals("}")) {
+                    jsonInputStringBuilder.append(line);
+                    System.out.println(line);
+                    line = in.readLine();
+                    System.out.println();
+                }
+
+                // final } used for termination of data sending from client
+                if (jsonInputStringBuilder.length() != 0) {
+                    jsonInputStringBuilder.append("}");
+                }
+
+                input = jsonInputStringBuilder.toString();
+
+                processJsomModel(input, out);
 
 
             } catch (IOException e) {
@@ -135,6 +165,15 @@ public class JsonLDServer {
              * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
              */
             return searchActionResponse;
+        }
+
+        private String generateBuyActionResponseJsonLD(String buyInput) {
+            String buyActionResponse = util.getJsonLD(util.jsonFolder + "BuyActionResponse.json");
+            /**
+             * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+             * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+             */
+            return buyActionResponse;
         }
 
 
