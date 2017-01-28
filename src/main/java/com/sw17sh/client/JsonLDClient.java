@@ -27,12 +27,42 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
 
 
-    private String getTextFromDataField(){
-//        dataField.addActionListener();
-        return null;
+
+    private void processWebsiteModel(String dataFieldInput){
+        String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
+        out.println(filledOutSearchAction);
+        messageArea.append(dataFieldInput + "\n");
+        messageArea.append("Send a filled out searchAction JsonLD back to the server:" + "\n");
+        messageArea.append(filledOutSearchAction);
+        messageArea.append("Receives completed SearchAction with response from server:" + "\n");
     }
 
+    private void noJsonModel(){
+        out.println(dataField.getText());
+        String response;
+        try {
+            response = in.readLine();
+            if (response == null || response.equals("")) {
+                System.exit(0);
+            }
+        } catch (IOException ex) {
+            response = "Error: " + ex;
+        }
+        messageArea.append(response + "\n");
+        dataField.selectAll();
+    }
+
+
+private void  processJsonModel(String dataFieldInput){
+    if(currentModelFromServer.getType().equals("WebSite")){
+        processWebsiteModel(dataFieldInput);
+    }else{
+        noJsonModel();
+    }
+
+}
     public JsonLDClient() {
+
 
         // Layout GUI
         messageArea.setEditable(false);
@@ -44,30 +74,7 @@ public class JsonLDClient {
 
             public void actionPerformed(ActionEvent e) {
                 String dataFieldInput = dataField.getText();
-                if(currentModelFromServer.getType().equals("WebSite")){
-                    String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
-                    out.println(filledOutSearchAction);
-                    messageArea.append(dataFieldInput + "\n");
-                    messageArea.append("Send a filled out searchAction JsonLD back to the server:" + "\n");
-                    messageArea.append(filledOutSearchAction);
-                    messageArea.append("Receives completed SearchAction with response from server:" + "\n");
-
-
-
-                }else{
-                    out.println(dataField.getText());
-                    String response;
-                    try {
-                        response = in.readLine();
-                        if (response == null || response.equals("")) {
-                            System.exit(0);
-                        }
-                    } catch (IOException ex) {
-                        response = "Error: " + ex;
-                    }
-                    messageArea.append(response + "\n");
-                    dataField.selectAll();
-                }
+                processJsonModel(dataFieldInput);
             }
         });
     }
