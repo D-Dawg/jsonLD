@@ -64,7 +64,6 @@ public class Util {
     public JsonLDTypeModel getjsonLDModel(String jsonLD){
         JsonLDTypeModel jsonLDModel = null;
 
-        //TODO Make sure the whole JSONLD file is beeing sent and received
         String jsonLDtype = getJsonLDModelType(jsonLD);
         if (jsonLDtype.equals("WebSite")){
             jsonLDModel = readWebsiteModel(jsonLD);

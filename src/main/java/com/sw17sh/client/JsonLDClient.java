@@ -83,10 +83,13 @@ public class JsonLDClient {
         messageArea.append(in.readLine() + "\n");
         StringBuilder jsonInputStringBuilder = new StringBuilder();
         String line;
-        while ((line = in.readLine()) != null && !line.equals("")) {
+        //need a line not empty test ?
+        while ((line = in.readLine()) != null && !line.equals("}")) {
             jsonInputStringBuilder.append(line);
             System.out.println(line);
         }
+        // final } used for termination of data sending from client
+        jsonInputStringBuilder.append("}");
         String jsonSearchAction = jsonInputStringBuilder.toString();
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
         messageArea.append("The Server sent a JsonLD Annotation of the website, which contains a SearchAction" + "\n");
