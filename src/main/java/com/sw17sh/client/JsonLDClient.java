@@ -35,6 +35,30 @@ public class JsonLDClient {
         messageArea.append("Send a filled out searchAction JsonLD back to the server:" + "\n");
         messageArea.append(filledOutSearchAction);
         messageArea.append("Receives completed SearchAction with response from server:" + "\n");
+        try {
+            StringBuilder jsonInputStringBuilder = new StringBuilder();
+            String line = in.readLine();
+            System.out.println();
+            //need a line not empty test ?
+            while (line != null && !line.equals("}") && !line.equals("")) {
+                jsonInputStringBuilder.append(line);
+                System.out.println(line);
+                line = in.readLine();
+                System.out.println();
+            }
+            // final } used for termination of data sending from client
+            jsonInputStringBuilder.append("}");
+            String response = jsonInputStringBuilder.toString();
+
+
+            messageArea.append(response + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //TODO implement reading of server input and buy action
+
     }
 
     private void noJsonModel(){
@@ -131,6 +155,7 @@ private void  processJsonModel(String dataFieldInput){
          */
         return filledOutSearchAction;
     }
+
 
     /**
      * Runs the client application.

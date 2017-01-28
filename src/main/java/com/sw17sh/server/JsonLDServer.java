@@ -51,7 +51,8 @@ public class JsonLDServer {
             System.out.println("Starting Search for events that match.");
             System.out.println();
             System.out.println("Server sends SearchAction  with response back:");
-            String searchActionResponse = findSearchActionResponse(input);
+
+            String searchActionResponse = generateSearchActionResponseJsonLD(input);
             System.out.println(searchActionResponse);
             out.println(searchActionResponse);
             //   SearchActionModel searchActionModel = (SearchActionModel) util.getjsonLDModel(input);
@@ -127,11 +128,15 @@ public class JsonLDServer {
             }
         }
 
-        private String findSearchActionResponse(String input) {
-
-
-            return null;
+        private String generateSearchActionResponseJsonLD(String searchInput) {
+            String searchActionResponse = util.getJsonLD(util.jsonFolder + "SearchActionResponse.json");
+            /**
+             * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+             * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+             */
+            return searchActionResponse;
         }
+
 
         /**
          * Logs a simple message.  In this case we just write the
