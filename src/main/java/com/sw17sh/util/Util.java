@@ -43,6 +43,32 @@ public class Util {
         return start;
     }
 
+    public String readInputJsonLDScript(BufferedReader in) {
+        StringBuilder jsonInputStringBuilder = new StringBuilder();
+
+        //read the input
+        String line = null;
+        try {
+            line = in.readLine();
+
+            while (line != null && !line.equals("}")) {
+                jsonInputStringBuilder.append(line).append("\n");
+                System.out.println(line);
+                line = in.readLine();
+                System.out.println();
+            }
+
+            // final } used for termination of data sending from client
+            if (jsonInputStringBuilder.length() != 0) {
+                jsonInputStringBuilder.append("}");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String response = jsonInputStringBuilder.toString();
+        return response;
+    }
+
     public String readInput(){
         String input = null;
         try {

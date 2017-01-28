@@ -90,7 +90,7 @@ public class JsonLDServer {
         public void run() {
             try {
                 ServerImpl server = new ServerImpl();
-                String webSiteJsonLD = server.service1InitialConnect().replaceAll("\n", "");
+                String webSiteJsonLD = server.service1InitialConnect();  //.replaceAll("\n", "")
 
                 // Decorate the streams so we can send characters
                 // and not just bytes.  Ensure output is flushed

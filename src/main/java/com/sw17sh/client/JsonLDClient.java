@@ -27,74 +27,36 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
 
 
+    private void processWebsiteModel(String dataFieldInput) {
 
-    private void processWebsiteModel(String dataFieldInput){
-        String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
-        out.println(filledOutSearchAction);
-        messageArea.append(dataFieldInput + "\n");
-        messageArea.append("Send Search Action Request:" + "\n");
-        messageArea.append(filledOutSearchAction);
-        messageArea.append("Receive Search Action Response:" + "\n");
-        try {
-            StringBuilder jsonInputStringBuilder = new StringBuilder();
-            String line = in.readLine();
-            System.out.println();
-            //need a line not empty test ?
-            while (line != null && !line.equals("}") && !line.equals("")) {
-                jsonInputStringBuilder.append(line);
-                System.out.println(line);
-                line = in.readLine();
-                System.out.println();
-            }
-            // final } used for termination of data sending from client
-            if (jsonInputStringBuilder.length() != 0) {
-                jsonInputStringBuilder.append("}");
-            }
-            String response = jsonInputStringBuilder.toString();
+        //Parsing user input
+        String searchActionRequest = generateSearchActionRequest(dataFieldInput).replaceAll("\r\n", "");
 
-            messageArea.append(response + "\n");
+        //Send SearchActionRequest
+        out.println(searchActionRequest);
+        messageArea.append(dataFieldInput + "\n" + "\n");
+        messageArea.append("Send Search Action Request:" + "\n" + "\n");
+        messageArea.append(searchActionRequest);
 
+        //read SearchActionResponse
+        String response = util.readInputJsonLDScript(in);
+        messageArea.append("Receive Search Action Response:" + "\n" + "\n");
+        messageArea.append(response + "\n" + "\n");
+
+        //Send BuyactionRequest
             String buyActionRequest = generateFilledOutBuyActionJsonLD(response);
-
-            messageArea.append("Send Buy Action Request:" + "\n");
-            messageArea.append(buyActionRequest + "\n");
+        messageArea.append("Send Buy Action Request:" + "\n" + "\n");
+        messageArea.append(buyActionRequest + "\n" + "\n");
             out.println(buyActionRequest);
 
-
-            jsonInputStringBuilder = new StringBuilder();
-
-            //read the BuyActionResponse
-            line = in.readLine();
-            System.out.println();
-
-            while (line != null && !line.equals("}")) {
-                jsonInputStringBuilder.append(line);
-                System.out.println(line);
-                line = in.readLine();
-                System.out.println();
-            }
-
-            // final } used for termination of data sending from client
-            if (jsonInputStringBuilder.length() != 0) {
-                jsonInputStringBuilder.append("}");
-            }
-            response = jsonInputStringBuilder.toString();
-
-            messageArea.append("Receive Buy Action Response back:" + "\n");
-
-            messageArea.append(response + "\n");
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        //TODO implement buy action
+        //read and print BuyActionResponse
+        response = util.readInputJsonLDScript(in);
+        messageArea.append("Receive Buy Action Response:");
+        messageArea.append(response + "\n" + "\n");
 
     }
 
-    private void noJsonModel(){
+    private void noJsonModel() {
         out.println(dataField.getText());
         String response;
         try {
@@ -110,14 +72,15 @@ public class JsonLDClient {
     }
 
 
-private void  processJsonModel(String dataFieldInput){
-    if(currentModelFromServer.getType().equals("WebSite")){
-        processWebsiteModel(dataFieldInput);
-    }else{
-        noJsonModel();
+    private void processJsonModel(String dataFieldInput) {
+        if (currentModelFromServer.getType().equals("WebSite")) {
+            processWebsiteModel(dataFieldInput);
+        } else {
+            noJsonModel();
+        }
+
     }
 
-}
     public JsonLDClient() {
 
 
@@ -155,33 +118,34 @@ private void  processJsonModel(String dataFieldInput){
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
 
- /*       StringBuilder jsonInputStringBuilder = new StringBuilder();
+
+        StringBuilder jsonInputStringBuilder = new StringBuilder();
         String line = in.readLine();
         System.out.println();
         //need a line not empty test ?
-        while (line  != null && !line.equals("}") && !line.equals("")) {
-            jsonInputStringBuilder.append(line);
+        while (line != null && !line.equals("}") && !line.equals("")) {
+            jsonInputStringBuilder.append(line + "\n");
             System.out.println(line);
             line = in.readLine();
             System.out.println();
         }
         // final } used for termination of data sending from client
         jsonInputStringBuilder.append("}");
-             String jsonSearchAction = jsonInputStringBuilder.toString();*/
+        String jsonSearchAction = jsonInputStringBuilder.toString();
 
 
-        String jsonSearchAction = in.readLine();
+        messageArea.append("Receive Search Action Specification" + "\n");
+        messageArea.append(jsonSearchAction + "\n");
 
+        currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n"
 
-        currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
-        messageArea.append("The Server send an WebsiteJson containing a SearchAction"+ "\n");
-        messageArea.append(jsonSearchAction+ "\n");
-        messageArea.append("Whats the name of the event you want to go to?"+ "\n");
+        );
+        messageArea.append("Whats the name of the event you want to go to?" + "\n");
 
     }
 
-    private String generateFilledOutSearchActionJsonLD(String searchInput){
-        String filledOutSearchAction = util.getJsonLD(util.jsonFolder+"SearchActionRequest.json");
+    private String generateSearchActionRequest(String searchInput) {
+        String filledOutSearchAction = util.getJsonLD(util.jsonFolder + "SearchActionRequest.json");
         /**
          * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
          * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
