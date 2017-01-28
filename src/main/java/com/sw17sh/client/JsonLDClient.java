@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 
-
 public class JsonLDClient {
     private BufferedReader in;
     private PrintWriter out;
@@ -24,9 +23,9 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
 
 
-    private String getTextFromDataField(){
+    private String getTextFromDataField() {
 //        dataField.addActionListener();
-    return null;
+        return null;
     }
 
     private JsonLDClient() {
@@ -41,12 +40,12 @@ public class JsonLDClient {
 
             public void actionPerformed(ActionEvent e) {
                 String dataFieldInput = dataField.getText();
-                if(currentModelFromServer.getType().equals("WebSite")){
-                    String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
+                if (currentModelFromServer.getType().equals("WebSite")) {
+                    String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n", "");
                     out.println(filledOutSearchAction);
                     messageArea.append(dataFieldInput + "\n");
-                    messageArea.append("Send the filled out searchActionJson back to the server."+ "\n");
-                }else{
+                    messageArea.append("Send the filled out searchActionJson back to the server." + "\n");
+                } else {
                     out.println(dataField.getText());
                     String response;
                     try {
@@ -82,20 +81,25 @@ public class JsonLDClient {
 
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
-        String jsonSearchAction = in.readLine();
+        StringBuilder jsonInputStringBuilder = new StringBuilder();
+        String line;
+        while ((line = in.readLine()) != null && !line.equals("")) {
+            jsonInputStringBuilder.append(line);
+            System.out.println(line);
+        }
+        String jsonSearchAction = jsonInputStringBuilder.toString();
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
         messageArea.append("The Server sent a JsonLD Annotation of the website, which contains a SearchAction" + "\n");
-        messageArea.append(jsonSearchAction+ "\n");
-        messageArea.append("Whats the name of the event you want to go to?"+ "\n");
+        messageArea.append(jsonSearchAction + "\n");
+        messageArea.append("Whats the name of the event you want to go to?" + "\n");
         String input = null;
 //        String input = util.readInput();
 
 
-
     }
 
-    private String generateFilledOutSearchActionJsonLD(String searchInput){
-        String filledOutSearchAction = util.getJsonLD(util.jsonFolder+"FilledOutSearchActionJsonLD.json");
+    private String generateFilledOutSearchActionJsonLD(String searchInput) {
+        String filledOutSearchAction = util.getJsonLD(util.jsonFolder + "FilledOutSearchActionJsonLD.json");
         /**
          * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
          * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
