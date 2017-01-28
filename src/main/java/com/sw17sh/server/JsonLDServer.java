@@ -1,8 +1,6 @@
 package com.sw17sh.server;
 
 
-import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
 import java.io.BufferedReader;
@@ -16,7 +14,6 @@ import java.net.Socket;
  * Created by denni on 1/25/2017.
  */
 public class JsonLDServer {
-
 
 
     public static void main(String[] args) throws Exception {
@@ -56,7 +53,7 @@ public class JsonLDServer {
         public void run() {
             try {
                 ServerImpl server = new ServerImpl();
-                String webSiteJsonLD = server.service1InitialConnect().replaceAll("\r\n","");
+                String webSiteJsonLD = server.service1InitialConnect().replaceAll("\n", "");
 
                 // Decorate the streams so we can send characters
                 // and not just bytes.  Ensure output is flushed
@@ -70,32 +67,50 @@ public class JsonLDServer {
                 out.println(webSiteJsonLD);
 
 
-
-                // Get messages from the client, line by line; return them
-                // capitalized
-                while (true) {
-                    String input = in.readLine();
-                    if (input == null || input.equals(".")) {
-                        break;
-                    }
-                    String modelType = util.getJsonLDModelType(input);
-                    if(modelType.equals("SearchAction")){
-                        System.out.println("The Client send a "+modelType+"json with a filled out SearchAction back.");
-                        System.out.println(input);
-                        System.out.println("Starting Search for events that match.");
-                        WebsiteModel filledOutWebsite = (WebsiteModel) util.getjsonLDModel(input);
-                        if(filledOutWebsite!=null){
-
-                        }
-                    }else {
-                        out.println("Error not a matching json model found.");
-                    }
-
-
-
-
-
+                StringBuilder jsonInputStringBuilder = new StringBuilder();
+                String line;
+                //need a line not empty test ?
+                line = in.readLine();
+                String hallo = "";
+                while (line != null && !line.equals("") && !line.equals("}")) {
+                    jsonInputStringBuilder.append(line);
+                    System.out.println(line);
+                    line = in.readLine();
+                    System.out.println();
                 }
+                boolean test = jsonInputStringBuilder.length() != 0;
+                // final } used for termination of data sending from client
+                if (jsonInputStringBuilder.length() != 0) {
+                    jsonInputStringBuilder.append("}");
+                }
+
+                String input = jsonInputStringBuilder.toString();
+
+
+                String modelType = util.getJsonLDModelType(input);
+                if (modelType.equals("SearchAction")) {
+                    System.out.println("The Client send a " + modelType + "json with a filled out SearchAction back.");
+                    System.out.println(input);
+                    System.out.println("Starting Search for events that match.");
+                    System.out.println();
+                    System.out.println("Server sends SearchAction  with response back:");
+
+
+                    String searchActionResponse = findSearchActionResponse(input);
+                    System.out.println(searchActionResponse);
+                    out.println(searchActionResponse);
+
+
+                    //   SearchActionModel searchActionModel = (SearchActionModel) util.getjsonLDModel(input);
+                    //if(searchActionModel!=null){
+
+                    //System.out.println(searchActionModel);
+                    //  }
+                } else {
+                    out.println("Error not a matching json model found.");
+                }
+
+
             } catch (IOException e) {
                 log("Error handling client# " + clientNumber + ": " + e);
             } finally {
@@ -106,6 +121,12 @@ public class JsonLDServer {
                 }
                 log("Connection with client# " + clientNumber + " closed");
             }
+        }
+
+        private String findSearchActionResponse(String input) {
+
+
+            return null;
         }
 
         /**

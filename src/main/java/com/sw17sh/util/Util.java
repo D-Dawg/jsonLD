@@ -1,16 +1,16 @@
 package com.sw17sh.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sw17sh.model.JsonLDTypeModel;
+import com.sw17sh.model.SearchActionModel;
+import com.sw17sh.model.WebsiteModel;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
-
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.WebsiteModel;
-import org.apache.log4j.Logger;
 
 
 
@@ -70,8 +70,24 @@ public class Util {
         String jsonLDtype = getJsonLDModelType(jsonLD);
         if (jsonLDtype.equals("WebSite")){
             jsonLDModel = readWebsiteModel(jsonLD);
+        } else if (jsonLDtype.equals("SearchAction")) {
+            System.out.println("Search Action");
+            jsonLDModel = readSearchActionModel(jsonLD);
         }
         return jsonLDModel;
+    }
+
+    private JsonLDTypeModel readSearchActionModel(String jsonLDSerachACtion) {
+        if (jsonLDSerachACtion != null) {
+            try {
+                return objectMapper.readValue(jsonLDSerachACtion, SearchActionModel.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            LOGGER.error("Empty String cant continue");
+        }
+        return null;
     }
 
     public WebsiteModel readWebsiteModel(String jsonLDWebsite){

@@ -1,7 +1,6 @@
 package com.sw17sh.client;
 
 import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.WebsiteModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -49,7 +48,12 @@ public class JsonLDClient {
                     String filledOutSearchAction = generateFilledOutSearchActionJsonLD(dataFieldInput).replaceAll("\r\n","");
                     out.println(filledOutSearchAction);
                     messageArea.append(dataFieldInput + "\n");
-                    messageArea.append("Send the filled out searchActionJson back to the server."+ "\n");
+                    messageArea.append("Send a filled out searchAction JsonLD back to the server:" + "\n");
+                    messageArea.append(filledOutSearchAction);
+                    messageArea.append("Receives completed SearchAction with response from server:" + "\n");
+
+
+
                 }else{
                     out.println(dataField.getText());
                     String response;
@@ -86,15 +90,29 @@ public class JsonLDClient {
 
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
+
+     /*   StringBuilder jsonInputStringBuilder = new StringBuilder();
+        String line = in.readLine();
+        System.out.println();
+        //need a line not empty test ?
+        while (line  != null && !line.equals("}") && !line.equals("")) {
+            jsonInputStringBuilder.append(line);
+            System.out.println(line);
+            line = in.readLine();
+            System.out.println();
+        }
+        // final } used for termination of data sending from client
+        jsonInputStringBuilder.append("}");
+             String jsonSearchAction = jsonInputStringBuilder.toString();
+             */
+
         String jsonSearchAction = in.readLine();
-        currentModelFromServer = (WebsiteModel) util.getjsonLDModel(jsonSearchAction);
+
+
+        currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
         messageArea.append("The Server send an WebsiteJson containing a SearchAction"+ "\n");
         messageArea.append(jsonSearchAction+ "\n");
         messageArea.append("Whats the name of the event you want to go to?"+ "\n");
-        String input = null;
-//        String input = util.readInput();
-
-
 
     }
 
