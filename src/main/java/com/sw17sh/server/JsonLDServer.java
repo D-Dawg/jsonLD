@@ -45,6 +45,31 @@ public class JsonLDServer {
             log("New connection with client# " + clientNumber + " at " + socket);
         }
 
+        private void processSeachActionModel(String input, String modelType, PrintWriter out){
+            System.out.println("The Client send a " + modelType + "json with a filled out SearchAction back.");
+            System.out.println(input);
+            System.out.println("Starting Search for events that match.");
+            System.out.println();
+            System.out.println("Server sends SearchAction  with response back:");
+            String searchActionResponse = findSearchActionResponse(input);
+            System.out.println(searchActionResponse);
+            out.println(searchActionResponse);
+            //   SearchActionModel searchActionModel = (SearchActionModel) util.getjsonLDModel(input);
+            //if(searchActionModel!=null){
+            //System.out.println(searchActionModel);
+        }
+
+        private void processJsomModel(String input, PrintWriter out){
+            String modelType = util.getJsonLDModelType(input);
+            if (modelType.equals("SearchAction")) {
+               processSeachActionModel(input,modelType,out);
+            } else {
+                out.println("Error not a matching json model found.");
+            }
+        }
+
+
+
         /**
          * Services this thread's client by first sending the
          * client a welcome message then repeatedly reading strings
@@ -86,29 +111,8 @@ public class JsonLDServer {
 
                 String input = jsonInputStringBuilder.toString();
 
+                processJsomModel(input,out);
 
-                String modelType = util.getJsonLDModelType(input);
-                if (modelType.equals("SearchAction")) {
-                    System.out.println("The Client send a " + modelType + "json with a filled out SearchAction back.");
-                    System.out.println(input);
-                    System.out.println("Starting Search for events that match.");
-                    System.out.println();
-                    System.out.println("Server sends SearchAction  with response back:");
-
-
-                    String searchActionResponse = findSearchActionResponse(input);
-                    System.out.println(searchActionResponse);
-                    out.println(searchActionResponse);
-
-
-                    //   SearchActionModel searchActionModel = (SearchActionModel) util.getjsonLDModel(input);
-                    //if(searchActionModel!=null){
-
-                    //System.out.println(searchActionModel);
-                    //  }
-                } else {
-                    out.println("Error not a matching json model found.");
-                }
 
 
             } catch (IOException e) {
