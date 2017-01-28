@@ -122,7 +122,7 @@ private void  processJsonModel(String dataFieldInput){
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
 
-     /*   StringBuilder jsonInputStringBuilder = new StringBuilder();
+        StringBuilder jsonInputStringBuilder = new StringBuilder();
         String line = in.readLine();
         System.out.println();
         //need a line not empty test ?
@@ -135,9 +135,9 @@ private void  processJsonModel(String dataFieldInput){
         // final } used for termination of data sending from client
         jsonInputStringBuilder.append("}");
              String jsonSearchAction = jsonInputStringBuilder.toString();
-             */
 
-        String jsonSearchAction = in.readLine();
+
+//        String jsonSearchAction = in.readLine();
 
 
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction);
