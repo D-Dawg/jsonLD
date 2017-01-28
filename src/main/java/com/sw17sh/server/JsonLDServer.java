@@ -88,7 +88,7 @@ public class JsonLDServer {
 
                         }
                     }else {
-                        out.println("Error not a matching json model found.");
+                        out.println("Error not a matching json model found. ");
                     }
 
 
