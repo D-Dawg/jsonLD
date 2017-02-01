@@ -77,7 +77,6 @@ public class Util {
         String line = null;
         try {
             line = in.readLine();
-
             //Empty ness check here or not ?
             while (line != null && !line.equals("}") && !line.equals("")) {
                 jsonInputStringBuilder.append(line).append("\n");

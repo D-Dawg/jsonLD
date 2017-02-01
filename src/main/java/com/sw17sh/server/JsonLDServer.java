@@ -1,6 +1,7 @@
 package com.sw17sh.server;
 
 
+import com.sun.corba.se.spi.activation.Server;
 import com.sw17sh.util.Util;
 
 import java.io.BufferedReader;
@@ -12,6 +13,7 @@ import java.net.Socket;
 
 
 public class JsonLDServer {
+
 
 
     public static void main(String[] args) throws Exception {
@@ -36,6 +38,7 @@ public class JsonLDServer {
         private Socket socket;
         private int clientNumber;
         private Util util = new Util();
+        private StringBuilder jsonInputStringBuilder = new StringBuilder();
 
         public EventViewer(Socket socket, int clientNumber) {
             this.socket = socket;
@@ -61,11 +64,9 @@ public class JsonLDServer {
             System.out.println("Server processes SearchAction");
             System.out.println();
             System.out.println("Server sends SearchAction  with response back:");
-
             String searchActionResponse = generateSearchActionResponseJsonLD(input);
             System.out.println(searchActionResponse);
             out.println(searchActionResponse);
-
         }
 
         private void processBuyActionModel(String input, String modelType, PrintWriter out) {
@@ -86,33 +87,69 @@ public class JsonLDServer {
          * client a welcome message then repeatedly reading strings
          * and sending back the capitalized version of the string.
          */
+
+        private void sendWelcomeMessageAndWebSiteJsonLDToClient(PrintWriter out) {
+            // Send a welcome message to the client.
+            ServerImpl server = new ServerImpl();
+            String webSiteJsonLD = server.service1InitialConnect();  //
+            out.println("Hello, you are client #" + clientNumber + ".");
+            out.println(webSiteJsonLD);
+        }
+
+        private void getJsonFiles(String input, PrintWriter out){
+            if(input.equals("")&&!jsonInputStringBuilder.toString().equals("")){
+                String completeJson = jsonInputStringBuilder.toString();
+                jsonInputStringBuilder = new StringBuilder();
+                processJsomModel(completeJson,out);
+            }else{
+                jsonInputStringBuilder.append(input).append("\n");
+            }
+
+        }
+
+        private void waitForResponse(BufferedReader in, PrintWriter out) {
+
+            while (true) {
+                try {
+                    String input = in.readLine();
+                    if (input == null || input.equals(".")) {
+                        break;
+                    }
+
+                    getJsonFiles(input,out);
+
+//                            util.readInputJsonLDScriptNotWaitingInput(in);
+
+
+
+                } catch (Exception e) {
+
+                }
+            }
+
+
+        }
+
+
         public void run() {
             try {
-                ServerImpl server = new ServerImpl();
-                String webSiteJsonLD = server.service1InitialConnect();  //.replaceAll("\n", "")
-
-                // Decorate the streams so we can send characters
-                // and not just bytes.  Ensure output is flushed
-                // after every newline.
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(socket.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-                // Send a welcome message to the client.
-                out.println("Hello, you are client #" + clientNumber + ".");
-                out.println(webSiteJsonLD);
+                sendWelcomeMessageAndWebSiteJsonLDToClient(out);
 
+                waitForResponse(in,out);
 
                 //read SearchActionRequest
-                String input = util.readInputJsonLDScriptNotWaitingInput(in);
-
-                //process and send Search response
-                processJsomModel(input, out);
-
-                //read BuyActionResponse
-                input = util.readInputJsonLDScript(in);
-                //process and send response
-                processJsomModel(input, out);
+//                String input = util.readInputJsonLDScriptNotWaitingInput(in);
+//
+//                //process and send Search response
+//                processJsomModel(input, out);
+//
+//                //read BuyActionResponse
+//                input = util.readInputJsonLDScript(in);
+//                //process and send response
+//                processJsomModel(input, out);
 
 
             } catch (IOException e) {
