@@ -44,7 +44,7 @@ public class JsonLDServer {
         server.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         server.frame.pack();
         server.frame.setVisible(true);
-        server.messageArea.append("The JsonLD Event server is now running.");
+        server.messageArea.append("The JsonLD Event server is now running."+"\n");
 
 
         int clientNumber = 0;
@@ -104,11 +104,11 @@ public class JsonLDServer {
 
         private void processSeachActionModel(String input, String modelType) {
             initializeIO();
-            server.messageArea.append("The Client send a " + modelType + "json.");
-            server.messageArea.append(input);
-            server.messageArea.append("Server processes SearchAction");
+            server.messageArea.append("\nThe Client send a " + modelType + "json."+"\n");
+            server.messageArea.append(input+"\n");
+            server.messageArea.append("Server processes SearchAction"+"\n");
             server.messageArea.append("\n");
-            server.messageArea.append("Server sends SearchAction  with response back:");
+            server.messageArea.append("Server sends SearchAction  with response back:"+"\n");
             String searchActionResponse = generateSearchActionResponseJsonLD(input);
 //           server.messageArea.append(searchActionResponse);
             out.println(searchActionResponse);
@@ -117,11 +117,11 @@ public class JsonLDServer {
         }
 
         private void processBuyActionModel(String input, String modelType) {
-            server.messageArea.append("The Client send a " + modelType + ".");
-            server.messageArea.append(input);
-            server.messageArea.append("Server processes BuyAction");
+            server.messageArea.append("The Client send a " + modelType + "."+"\n");
+            server.messageArea.append(input+"\n");
+            server.messageArea.append("Server processes BuyAction"+"\n");
             server.messageArea.append("\n");
-            server.messageArea.append("Server sends BuyAction Response:");
+            server.messageArea.append("Server sends BuyAction Response:"+"\n");
             String searchActionResponse = generateBuyActionResponseJsonLD(input);
 //           server.messageArea.append(searchActionResponse);
             out.println(searchActionResponse);

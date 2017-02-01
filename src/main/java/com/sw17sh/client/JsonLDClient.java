@@ -37,31 +37,32 @@ public class JsonLDClient {
 
         //Send SearchActionRequest
         out.println(searchActionRequest);
-        messageArea.append(dataFieldInput + "\n" + "\n");
         messageArea.append("Send Search Action Request:" + "\n" + "\n");
-        messageArea.append(searchActionRequest);
+        messageArea.append(dataFieldInput + "\n" + "\n");
+//        messageArea.append(searchActionRequest);
 
         //read SearchActionResponse
         String response = util.readInputJsonLDScriptNotWaitingInput(in);
         currentModelFromServer = util.getjsonLDModel(response + "\n");
         messageArea.append("Receive Search Action Response:" + "\n" + "\n");
         messageArea.append(response + "\n" + "\n");
-        label.setText("Choose an Event you want to go to.");
+        label.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
     }
 
     private void processSearchActionResponse(String dataFieldInput) {
         //Send BuyactionRequest
         String buyActionRequest = generateFilledOutBuyActionJsonLD(dataFieldInput);
         messageArea.append("Send Buy Action Request:" + "\n" + "\n");
-        messageArea.append(buyActionRequest + "\n" + "\n");
+        messageArea.append(dataFieldInput+"\n");
+//        messageArea.append(buyActionRequest + "\n" + "\n");
         out.println(buyActionRequest);
         out.flush();
 
         //read and print BuyActionResponse
         String response = util.readInputJsonLDScript(in);
-        messageArea.append("Receive Buy Action Response:");
+        messageArea.append("Receive Buy Action Response:"+"\n");
         messageArea.append( response + "\n" + "\n");
-        label.setText("Thank you for buying a Ticket with us.");
+        label.setText("Thank you for buying a Ticket with us."+"\n");
         dataField.setEnabled(false);
     }
 
