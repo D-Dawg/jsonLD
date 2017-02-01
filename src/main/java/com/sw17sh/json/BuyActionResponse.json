@@ -1,25 +1,75 @@
 {
   "@context": "http://schema.org",
   "@type": "BuyAction",
-  "object": {
-    "@id": "www.ID.Offer.S.XLETIX.com"
+  "actionStatus": "CompletedActionStatus",
+  "target": "www.oururl.com",
+  "agent": {
+    "@type": "Person",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Innsbruck",
+      "addressCountry": "Austria"
+    },
+    "familyName": "Buyer",
+    "givenName": "Ticket",
+    "email": "Ticket.buyer@gmail.com"
   },
   "seller": {
-    "@id": "www.ID.XLETIX.Organization.com"
+    "@type": "Organization",
+    "id": "www.ID.XLETIX.Organization.com",
+    "name": "XLETIX GmbH",
+    "url": "http://www.xletix.com/"
   },
-  "actionStatus": "CompletedActionStatus",
-  "entrypoint": "www.oururl.com",
   "priceSpecification": {
     "@type": "priceSpecification",
     "id": "www.ID.PriceSpecification.Offer.S.XLETIX.com",
     "price": "54",
     "priceCurrency": "EU"
   },
+  "object": {
+    "@type": "Offer",
+    "id": "www.ID.Offer.S.XLETIX.com",
+    "name": "S-Distanz",
+    "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+    "priceSpecification": {
+      "@id": "www.ID.PriceSpecification.Offer.S.XLETIX.com"
+    },
+    "includesObject": {
+      "@type": "TypeAndQuantityNode",
+      "amountOfThisGood": "1",
+      "typeOfGood": {
+        "@type": [
+          "Ticket",
+          "Product"
+        ]
+      }
+    },
+    "itemOffered": {
+      "@type": "Ticket",
+      "underName": "Mr Ticket Buyer",
+      "totalPrice": "54",
+      "issuedBy": {
+        "@type": "Organization",
+        "id": "www.ID.Eventbrite.Organization.com",
+        "name": "Eventbrite GmbH",
+        "url": "http://www.Eventbrite.de/"
+      }
+    }
+  },
   "result": {
     "@type": "Ticket",
-    "underName": "",
+    "name": "XLETIX S-Distanz Ticket",
+    "url": "http://www.xletix.com/S-Distance",
+    "underName": "Mr Ticket Buyer",
+    "totalPrice": "54",
+    "TicketNumber": "1",
+    "dateIssued": "2017-07-27T12:00:00",
     "issuedBy": {
-      "@id": "www.ID.XLETIX.Organization.com"
+      "@type": "Organization",
+      "id": "www.ID.Eventbrite.Organization.com",
+      "name": "Eventbrite GmbH",
+      "url": "http://www.Eventbrite.de/"
     }
   }
 }
+

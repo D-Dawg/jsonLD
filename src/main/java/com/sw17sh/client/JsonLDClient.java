@@ -14,10 +14,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Created by denni on 1/25/2017.
- */
-
 
 public class JsonLDClient {
     private BufferedReader in;
@@ -46,7 +42,7 @@ public class JsonLDClient {
         currentModelFromServer = util.getjsonLDModel(response + "\n");
         messageArea.append("Receive Search Action Response:" + "\n" + "\n");
         messageArea.append(response + "\n" + "\n");
-        label.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
+        label.setText("Choose an Event and Offer you want to buy:\n Eventname, OfferNumber, First Name, Last Name");
     }
 
     private void processSearchActionResponse(String dataFieldInput) {
@@ -178,7 +174,7 @@ public class JsonLDClient {
         String jsonSearchAction = util.readInputJsonLDScriptNotWaitingInput(in);
         messageArea.append(jsonSearchAction + "\n" + "\n");
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n");
-        label.setText("Whats the name of the event you want to go to?");
+        label.setText("Whats the name of the event you want to search for?");
         messageArea.append(  "\n" + "\n");
     }
 

@@ -14,10 +14,7 @@
     "description": "Die XLETIX Challenge",
     "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F24893148%2F174451750539%2F1%2Foriginal.jpg?w=800&rect=0%2C0%2C2160%2C1080&s=ea6873684f226aa4974bae81db83a9ae",
     "organizer": {
-      "@type": "Organization",
-      "id": "www.ID.XLETIX.Organization.com",
-      "name": "XLETIX GmbH",
-      "url": "http://www.xletix.com/"
+      "@id": "www.ID.XLETIX.Organization.com"
     },
     "startDate": "2017-07-27T12:00:00",
     "location": {
@@ -53,17 +50,33 @@
         "priceSpecification": {
           "@id": "www.ID.PriceSpecification.Offer.S.XLETIX.com"
         },
+        "itemOffered": {
+          "@type": "Ticket",
+          "underName": "Mr Ticket Buyer",
+          "totalPrice": "54",
+          "issuedBy": {
+            "@type": "Organization",
+            "id": "www.ID.Eventbrite.Organization.com",
+            "name": "Eventbrite GmbH",
+            "url": "http://www.Eventbrite.de/"
+          }
+        },
         "potentialAction": {
-          "@type": "Buyaction",
-          "name": "S-Distanz",
-          "object": {
-            "@id": "www.ID.Offer.S.XLETIX.com"
+          "@type": "BuyAction",
+          "agent": {
+            "address-input": "required",
+            "familyName-input": "required",
+            "givenName-input": "required",
+            "email-input": "required"
           },
           "seller": {
-            "@id": "www.ID.XLETIX.Organization.com"
+            "@type": "Organization",
+            "id": "www.ID.XLETIX.Organization.com",
+            "name": "XLETIX GmbH",
+            "url": "http://www.xletix.com/"
           },
           "actionStatus": "PotentialActionStatus",
-          "entrypoint": "www.oururl.com",
+          "target": "www.oururl.com",
           "priceSpecification": {
             "@type": "priceSpecification",
             "id": "www.ID.PriceSpecification.Offer.S.XLETIX.com",
@@ -72,7 +85,10 @@
           },
           "result": {
             "@type": "Ticket",
-            "underName": "",
+            "underName-input": {
+              "@type": "PropertyValueSpecification",
+              "valueName": "Ticket Name under"
+            },
             "issuedBy": {
               "@id": "www.ID.XLETIX.Organization.com"
             }
@@ -83,10 +99,16 @@
         "@type": "Offer",
         "id": "www.ID.Offer.M.XLETIX.com",
         "name": "M-Distanz",
-        "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
+        "acceptedPaymentMethod": {
+          "@type": "PaymentMethod",
+          "name": "http://purl.org/goodrelations/v1#PayPal"
+        },
         "includesObject": {
           "@type": "TypeAndQuantityNode",
-          "amountOfThisGood": "",
+          "amountOfThisGood-input": {
+            "@type": "PropertyValueSpecification",
+            "valueName": "Ticket amount"
+          },
           "typeOfGood": {
             "@type": [
               "Ticket",
@@ -100,32 +122,49 @@
           "price": "54",
           "priceCurrency": "EU"
         },
+        "itemOffered": {
+          "@type": "Ticket",
+          "underName-input": "required",
+          "totalPrice": "54",
+          "issuedBy": {
+            "@type": "Organization",
+            "id": "www.ID.Eventbrite.Organization.com",
+            "name": "Eventbrite GmbH",
+            "url": "http://www.Eventbrite.de/"
+          }
+        },
         "potentialAction": {
           "@type": "Buyaction",
+          "agent": {
+            "address-input": "required",
+            "familyName-input": "required",
+            "givenName-input": "required",
+            "email-input": "required"
+          },
           "object": {
             "@id": "www.ID.Offer.M.XLETIX.com"
           },
           "seller": {
-            "@id": "www.ID.XLETIX.Organization.com"
+            "@type": "Organization",
+            "id": "www.ID.XLETIX.Organization.com",
+            "name": "XLETIX GmbH",
+            "url": "http://www.xletix.com/"
           },
           "actionStatus": "PotentialActionStatus",
-          "entrypoint": "www.oururl.com",
+          "target": "www.oururl.com",
           "priceSpecification": {
             "@id": "www.ID.PriceSpecification.Offer.M.XLETIX.com"
           },
           "result": {
             "@type": "Ticket",
-            "underName": "",
-            "issuedBy": {
-              "@id": "www.ID.XLETIX.Organization.com"
-            }
+            "name-output": "required",
+            "underName-output": "required",
+            "issuedBy-output": "required",
+            "ticketToken-output": "required",
+            "TicketNumber": "required"
           }
         }
       }
     ]
   }
 }
-
-
-
-
