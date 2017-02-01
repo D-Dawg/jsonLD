@@ -39,7 +39,10 @@
         "acceptedPaymentMethod": "http://purl.org/goodrelations/v1#PayPal",
         "includesObject": {
           "@type": "TypeAndQuantityNode",
-          "amountOfThisGood": "",
+          "amountOfThisGood-input": {
+            "@type": "PropertyValueSpecification",
+            "valueName": "Ticket amount"
+          },
           "typeOfGood": {
             "@type": [
               "Ticket",
@@ -52,6 +55,7 @@
         },
         "potentialAction": {
           "@type": "Buyaction",
+          "name": "S-Distanz",
           "object": {
             "@id": "www.ID.Offer.S.XLETIX.com"
           },
