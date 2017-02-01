@@ -1,9 +1,11 @@
 package com.sw17sh.server;
 
 
-import com.sun.corba.se.spi.activation.Server;
 import com.sw17sh.util.Util;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,18 +13,45 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static com.sw17sh.client.JsonLDClient.newVerticalPanel;
+
 
 public class JsonLDServer {
 
+    public JFrame frame = new JFrame("Event Server");
+    public JTextArea messageArea = new JTextArea(40, 40);
+
+
+    public JsonLDServer() {
+        generateGUI();
+    }
+
+    private void generateGUI() {
+        // Layout GUI
+
+        messageArea.setFont(new Font("Serif", Font.ITALIC, 16));
+//        messageArea.setBackground(new Color(0,0,0));
+        messageArea.setEditable(false);
+        JPanel panel = newVerticalPanel();
+        panel.add(new JScrollPane(messageArea));
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        frame.add(panel);
+    }
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println("The JsonLD Event server is now running.");
+        JsonLDServer server = new JsonLDServer();
+        server.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        server.frame.pack();
+        server.frame.setVisible(true);
+        server.messageArea.append("The JsonLD Event server is now running.");
+
+
         int clientNumber = 0;
         ServerSocket listener = new ServerSocket(9898);
         try {
             while (true) {
-                new EventViewer(listener.accept(), clientNumber++).start();
+                new EventViewer(listener.accept(), clientNumber++,server).start();
             }
         } finally {
             listener.close();
@@ -35,50 +64,69 @@ public class JsonLDServer {
      * containing only a period.
      */
     private static class EventViewer extends Thread {
+        private JsonLDServer server = new JsonLDServer();
         private Socket socket;
         private int clientNumber;
         private Util util = new Util();
         private StringBuilder jsonInputStringBuilder = new StringBuilder();
+        private boolean wait = false;
+        BufferedReader in = null;
+        PrintWriter out = null;
 
-        public EventViewer(Socket socket, int clientNumber) {
+        private void initializeIO() {
+            try {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        public EventViewer(Socket socket, int clientNumber,JsonLDServer server) {
             this.socket = socket;
             this.clientNumber = clientNumber;
+            this.server = server;
             log("New connection with client# " + clientNumber + " at " + socket);
         }
 
 
-        private void processJsomModel(String input, PrintWriter out) {
+        private void processJsomModel(String input) {
             String modelType = util.getJsonLDModelType(input);
             if (modelType.equals("SearchAction")) {
-                processSeachActionModel(input, modelType, out);
+                processSeachActionModel(input, modelType);
             } else if (modelType.equals("BuyAction")) {
-                processBuyActionModel(input, modelType, out);
+                processBuyActionModel(input, modelType);
             } else {
                 out.println("Error not a matching json model found.");
             }
         }
 
-        private void processSeachActionModel(String input, String modelType, PrintWriter out) {
-            System.out.println("The Client send a " + modelType + "json.");
-            System.out.println(input);
-            System.out.println("Server processes SearchAction");
-            System.out.println();
-            System.out.println("Server sends SearchAction  with response back:");
+        private void processSeachActionModel(String input, String modelType) {
+            initializeIO();
+            server.messageArea.append("The Client send a " + modelType + "json.");
+            server.messageArea.append(input);
+            server.messageArea.append("Server processes SearchAction");
+            server.messageArea.append("\n");
+            server.messageArea.append("Server sends SearchAction  with response back:");
             String searchActionResponse = generateSearchActionResponseJsonLD(input);
-            System.out.println(searchActionResponse);
+//           server.messageArea.append(searchActionResponse);
             out.println(searchActionResponse);
+            wait = true;
+            waitForResponse();
         }
 
-        private void processBuyActionModel(String input, String modelType, PrintWriter out) {
-            System.out.println("The Client send a " + modelType + ".");
-            System.out.println(input);
-            System.out.println("Server processes BuyAction");
-            System.out.println();
-            System.out.println("Server sends BuyAction Response:");
-
+        private void processBuyActionModel(String input, String modelType) {
+            server.messageArea.append("The Client send a " + modelType + ".");
+            server.messageArea.append(input);
+            server.messageArea.append("Server processes BuyAction");
+            server.messageArea.append("\n");
+            server.messageArea.append("Server sends BuyAction Response:");
             String searchActionResponse = generateBuyActionResponseJsonLD(input);
-            System.out.println(searchActionResponse);
+//           server.messageArea.append(searchActionResponse);
             out.println(searchActionResponse);
+            wait = true;
+            waitForResponse();
         }
 
 
@@ -87,72 +135,46 @@ public class JsonLDServer {
          * client a welcome message then repeatedly reading strings
          * and sending back the capitalized version of the string.
          */
-
-        private void sendWelcomeMessageAndWebSiteJsonLDToClient(PrintWriter out) {
+        private void sendWelcomeMessageAndWebSiteJsonLDToClient() {
             // Send a welcome message to the client.
+            initializeIO();
             ServerImpl server = new ServerImpl();
             String webSiteJsonLD = server.service1InitialConnect();  //
             out.println("Hello, you are client #" + clientNumber + ".");
             out.println(webSiteJsonLD);
+            wait = true;
+            waitForResponse();
         }
 
-        private void getJsonFiles(String input, PrintWriter out){
-            if(input.equals("")&&!jsonInputStringBuilder.toString().equals("")){
+        private void getJsonFilesAndProcessThem(String input) {
+            if (input.equals("") && !jsonInputStringBuilder.toString().equals("")) {
                 String completeJson = jsonInputStringBuilder.toString();
                 jsonInputStringBuilder = new StringBuilder();
-                processJsomModel(completeJson,out);
-            }else{
+                wait = false;
+                processJsomModel(completeJson);
+            } else {
                 jsonInputStringBuilder.append(input).append("\n");
             }
-
         }
 
-        private void waitForResponse(BufferedReader in, PrintWriter out) {
-
-            while (true) {
+        private void waitForResponse() {
+            while (wait) {
                 try {
                     String input = in.readLine();
-                    if (input == null || input.equals(".")) {
+                    if (input.equals(".")) {
                         break;
                     }
-
-                    getJsonFiles(input,out);
-
-//                            util.readInputJsonLDScriptNotWaitingInput(in);
-
-
-
+                    getJsonFilesAndProcessThem(input);
                 } catch (Exception e) {
 
                 }
             }
-
-
         }
-
 
         public void run() {
             try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-                sendWelcomeMessageAndWebSiteJsonLDToClient(out);
-
-                waitForResponse(in,out);
-
-                //read SearchActionRequest
-//                String input = util.readInputJsonLDScriptNotWaitingInput(in);
-//
-//                //process and send Search response
-//                processJsomModel(input, out);
-//
-//                //read BuyActionResponse
-//                input = util.readInputJsonLDScript(in);
-//                //process and send response
-//                processJsomModel(input, out);
-
-
-            } catch (IOException e) {
+                sendWelcomeMessageAndWebSiteJsonLDToClient();
+            } catch (Exception e) {
                 log("Error handling client# " + clientNumber + ": " + e);
             } finally {
                 try {
@@ -188,7 +210,7 @@ public class JsonLDServer {
          * message to the server applications standard output.
          */
         private void log(String message) {
-            System.out.println(message);
+            server.messageArea.append(message);
         }
     }
 

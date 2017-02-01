@@ -28,6 +28,7 @@ public class JsonLDClient {
     private Util util = new Util();
     private JsonLDTypeModel currentModelFromServer = null;
     private JButton sizeButton = new JButton("+");
+    private JLabel label = new JLabel("Your Answer:");
 
     private void processWebsiteModel(String dataFieldInput) {
 
@@ -42,20 +43,26 @@ public class JsonLDClient {
 
         //read SearchActionResponse
         String response = util.readInputJsonLDScriptNotWaitingInput(in);
+        currentModelFromServer = util.getjsonLDModel(response + "\n");
         messageArea.append("Receive Search Action Response:" + "\n" + "\n");
         messageArea.append(response + "\n" + "\n");
-//
-//        //Send BuyactionRequest
-//        String buyActionRequest = generateFilledOutBuyActionJsonLD(response);
-//        messageArea.append("Send Buy Action Request:" + "\n" + "\n");
-//        messageArea.append(buyActionRequest + "\n" + "\n");
-//        out.println(buyActionRequest);
-//
-//        //read and print BuyActionResponse
-//        response = util.readInputJsonLDScript(in);
-//        messageArea.append("Receive Buy Action Response:");
-//        messageArea.append(response + "\n" + "\n");
+        label.setText("Choose an Event you want to go to.");
+    }
 
+    private void processSearchActionResponse(String dataFieldInput) {
+        //Send BuyactionRequest
+        String buyActionRequest = generateFilledOutBuyActionJsonLD(dataFieldInput);
+        messageArea.append("Send Buy Action Request:" + "\n" + "\n");
+        messageArea.append(buyActionRequest + "\n" + "\n");
+        out.println(buyActionRequest);
+        out.flush();
+
+        //read and print BuyActionResponse
+        String response = util.readInputJsonLDScript(in);
+        messageArea.append("Receive Buy Action Response:");
+        messageArea.append( response + "\n" + "\n");
+        label.setText("Thank you for buying a Ticket with us.");
+        dataField.setEnabled(false);
     }
 
     private void noJsonModel() {
@@ -77,7 +84,10 @@ public class JsonLDClient {
     private void processJsonModel(String dataFieldInput) {
         if (currentModelFromServer.getType().equals("WebSite")) {
             processWebsiteModel(dataFieldInput);
-        } else {
+        } else if(currentModelFromServer.getType().equals("SearchAction")){
+            processSearchActionResponse(dataFieldInput);
+        }
+        else{
             noJsonModel();
         }
 
@@ -98,7 +108,7 @@ public class JsonLDClient {
         messageArea.setFont(new Font("Serif", Font.ITALIC, 16));
         messageArea.setBackground(new Color(211,211,211));
         messageArea.setEditable(false);
-        JLabel label = new JLabel("Your Answer:");
+        label.setPreferredSize( new Dimension(200,50));
         JPanel panel = newVerticalPanel();
         panel.add(sizeButton);
         panel.add(new JScrollPane(messageArea));
@@ -114,6 +124,7 @@ public class JsonLDClient {
             public void actionPerformed(ActionEvent e) {
                 String dataFieldInput = dataField.getText();
                 processJsonModel(dataFieldInput);
+                dataField.setText("");
             }
         });
         sizeButton.addActionListener(new ActionListener() {
@@ -150,6 +161,7 @@ public class JsonLDClient {
         return null;
     }
 
+
     private void initializeMessageIO(Socket socket){
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -159,13 +171,14 @@ public class JsonLDClient {
         }
     }
 
-    private void processSearActionJsonLD(){
+    private void processSearchActionJsonLD(){
         //Read and Print SeachArctionSpecification
         messageArea.append("\nReceive Search Action Specification:" + "\n");
         String jsonSearchAction = util.readInputJsonLDScriptNotWaitingInput(in);
         messageArea.append(jsonSearchAction + "\n" + "\n");
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n");
-        messageArea.append("Whats the name of the event you want to go to?" + "\n" + "\n");
+        label.setText("Whats the name of the event you want to go to?");
+        messageArea.append(  "\n" + "\n");
     }
 
     /**
@@ -185,7 +198,7 @@ public class JsonLDClient {
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
 
-        processSearActionJsonLD();
+        processSearchActionJsonLD();
     }
 
     private String generateSearchActionRequest(String searchInput) {
