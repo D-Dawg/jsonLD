@@ -26,12 +26,13 @@ public class Util {
 
     public String getJsonLD(String filepath){
         try{
-            return new Scanner(new File(filepath)).useDelimiter("\\Z").next();
+            return new Scanner(new File(jsonFolder+filepath+".json")).useDelimiter("\\Z").next();
         }catch (IOException e){
             LOGGER.error("Couldnt load file",e);
         }
         return null;
     }
+
 
     public boolean startClient(){
         boolean start = false;
@@ -78,7 +79,7 @@ public class Util {
         try {
             line = in.readLine();
             //Empty ness check here or not ?
-            while (line != null && !line.equals("}") && !line.equals("")) {
+            while (line != null && !line.equals("}") && !line.equals("") &&!line.equals("\n")) {
                 jsonInputStringBuilder.append(line).append("\n");
                 System.out.println(line);
                 line = in.readLine();
@@ -159,11 +160,11 @@ public class Util {
         return null;
     }
 
-    public String getJsonFromModel(WebsiteModel websiteModel){
+    public String getJsonFromModel(JsonLDTypeModel model){
         String modelAsJson = null;
-        if(websiteModel!=null) {
+        if(model!=null) {
             try {
-                modelAsJson =  objectMapper.writeValueAsString(websiteModel);
+                modelAsJson =  objectMapper.writeValueAsString(model);
             } catch (IOException e) {
                 e.printStackTrace();
             }

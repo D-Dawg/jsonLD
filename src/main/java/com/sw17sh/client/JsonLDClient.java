@@ -1,6 +1,7 @@
 package com.sw17sh.client;
 
 import com.sw17sh.model.JsonLDTypeModel;
+import com.sw17sh.model.SearchActionModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -43,10 +44,14 @@ public class JsonLDClient {
 
         //read SearchActionResponse
         String response = util.readInputJsonLDScriptNotWaitingInput(in);
-        currentModelFromServer = util.getjsonLDModel(response + "\n");
-        messageArea.append("Receive Search Action Response:" + "\n" + "\n");
-        messageArea.append(response + "\n" + "\n");
-        label.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
+        if(response.matches("No Events found.\n}")){
+            label.setText("No Matching Events found. Search again");
+        }else{
+            currentModelFromServer = util.getjsonLDModel(response + "\n");
+            messageArea.append("Receive Search Action Response:" + "\n" + "\n");
+            messageArea.append(response + "\n" + "\n");
+            label.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
+        }
     }
 
     private void processSearchActionResponse(String dataFieldInput) {
@@ -202,17 +207,20 @@ public class JsonLDClient {
         processSearchActionJsonLD();
     }
 
+    /**
+     * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+     * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+     */
     private String generateSearchActionRequest(String searchInput) {
-        String filledOutSearchAction = util.getJsonLD(util.jsonFolder + "SearchActionRequest.json");
-        /**
-         * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
-         * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
-         */
+        String filledOutSearchAction = util.getJsonLD( "SearchActionRequest");
+        SearchActionModel model = (SearchActionModel) util.getjsonLDModel(filledOutSearchAction);
+        model.event.name = searchInput;
+        filledOutSearchAction = util.getJsonFromModel(model)+"\n\n";
         return filledOutSearchAction;
     }
 
     private String generateFilledOutBuyActionJsonLD(String buyInput) {
-        String buyActionRequest = util.getJsonLD(util.jsonFolder + "BuyActionRequest.json");
+        String buyActionRequest = util.getJsonLD( "BuyActionRequest");
         /**
          * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
          * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.

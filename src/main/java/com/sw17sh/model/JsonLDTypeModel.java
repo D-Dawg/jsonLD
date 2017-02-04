@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JsonLDTypeModel  {
 
-    @JsonProperty("@type")
-    private String type;
+    @JsonProperty("@context")
+    public String context;
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    @JsonProperty("@type")
+    public String type;
+
 }

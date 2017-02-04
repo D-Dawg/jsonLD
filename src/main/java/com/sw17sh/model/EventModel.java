@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventModel extends JsonLDTypeModel {
 
-    @JsonProperty("@context")
-    private String context;
 
     @JsonProperty("url")
     private String url;
@@ -26,5 +24,9 @@ public class EventModel extends JsonLDTypeModel {
     public String endDate;
 
     @JsonProperty(value = "location")
-    public SearchActionModel.Place location;
+    public PlaceModel location;
+
+    @JsonProperty(value = "offers")
+    public OfferModel[] offers;
+
 }
