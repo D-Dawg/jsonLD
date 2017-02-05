@@ -121,7 +121,7 @@ public class JsonLDServer {
             EventModel[] eventsFromDB = loadEventDB();
             ArrayList<EventModel> allMatchingEvents = new ArrayList<EventModel>();
             for (EventModel aEvent:eventsFromDB){
-                if(aEvent.name.equals(searchRequest)){
+                if(aEvent.name.matches(".*"+searchRequest+".*")){
                     allMatchingEvents.add(aEvent);
                 }
             }
@@ -240,6 +240,7 @@ public class JsonLDServer {
             SearchActionModel request = (SearchActionModel) util.getjsonLDModel(searchInput);
             String searchRequest = request.event.name;
             EventModel[] allMatchingEvents = findAllMatchingEvents(searchRequest);
+            server.messageArea.append("Found: "+allMatchingEvents.length+" Events.");
             String  searchActionResponse = createResponseFromResults(allMatchingEvents,searchRequest)+"\n";
             return searchActionResponse;
         }

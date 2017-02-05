@@ -30,6 +30,7 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
     private JButton sizeButton = new JButton("+");
     private JLabel label = new JLabel("Your Answer:");
+    private JLabel label2 = new JLabel("");
 
     private void processWebsiteModel(String dataFieldInput) {
 
@@ -48,9 +49,11 @@ public class JsonLDClient {
             label.setText("No Matching Events found. Search again");
         }else{
             currentModelFromServer = util.getjsonLDModel(response + "\n");
+            SearchActionModel serverResponse = (SearchActionModel) currentModelFromServer;
+            label.setText("The Server found: "+serverResponse.result.length+" Events.");
             messageArea.append("Receive Search Action Response:" + "\n" + "\n");
             messageArea.append(response + "\n" + "\n");
-            label.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
+            label2.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
         }
     }
 
@@ -115,10 +118,12 @@ public class JsonLDClient {
         messageArea.setBackground(new Color(211,211,211));
         messageArea.setEditable(false);
         label.setPreferredSize( new Dimension(200,50));
+        label2.setPreferredSize( new Dimension(200,20));
         JPanel panel = newVerticalPanel();
         panel.add(sizeButton);
         panel.add(new JScrollPane(messageArea));
         panel.add(label);
+        panel.add(label2);
         panel.add(dataField);
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         frame.add(panel);
