@@ -1,6 +1,9 @@
 package com.sw17sh.server;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sw17sh.model.EventModel;
+import com.sw17sh.model.SearchActionModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -12,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import static com.sw17sh.client.JsonLDClient.newVerticalPanel;
 
@@ -20,7 +24,6 @@ public class JsonLDServer {
 
     public JFrame frame = new JFrame("Event Server");
     public JTextArea messageArea = new JTextArea(40, 40);
-
 
     public JsonLDServer() {
         generateGUI();
@@ -67,6 +70,7 @@ public class JsonLDServer {
         private JsonLDServer server = new JsonLDServer();
         private Socket socket;
         private int clientNumber;
+        private ObjectMapper objectMapper = new ObjectMapper();
         private Util util = new Util();
         private StringBuilder jsonInputStringBuilder = new StringBuilder();
         private boolean wait = false;
@@ -101,6 +105,45 @@ public class JsonLDServer {
                 out.println("Error not a matching json model found.");
             }
         }
+
+        private EventModel[] loadEventDB(){
+            EventModel[] events = null;
+            String eventDB = util.getJsonLD("EventDB");
+                try {
+                    events = objectMapper.readValue(eventDB,EventModel[].class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            return events;
+        }
+
+        private EventModel[] findAllMatchingEvents(String searchRequest){
+            EventModel[] eventsFromDB = loadEventDB();
+            ArrayList<EventModel> allMatchingEvents = new ArrayList<EventModel>();
+            for (EventModel aEvent:eventsFromDB){
+                if(aEvent.name.matches(".*"+searchRequest+".*")){
+                    allMatchingEvents.add(aEvent);
+                }
+            }
+            return allMatchingEvents.toArray(new EventModel[0]);
+        }
+
+        private String createResponseFromResults(EventModel[] matchingEvents, String searchRequest){
+            String response = null;
+            if(matchingEvents.length == 0){
+                response = "No Events found.";
+            }else{
+             SearchActionModel responseModel = new SearchActionModel();
+             responseModel.context = "http://schema.org";
+             responseModel.type = "SearchAction";
+             responseModel.actionStatus = "CompletedActionStatus";
+             responseModel.target = "http://example.com/search?&q={"+searchRequest+"}";
+             responseModel.result = matchingEvents;
+             response = util.getJsonFromModel(responseModel);
+            }
+            return response;
+        }
+
 
         private void processSeachActionModel(String input, String modelType) {
             initializeIO();
@@ -186,17 +229,24 @@ public class JsonLDServer {
             }
         }
 
+
+
+        /**
+         * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+         * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+         */
         private String generateSearchActionResponseJsonLD(String searchInput) {
-            String searchActionResponse = util.getJsonLD(util.jsonFolder + "SearchActionResponse.json");
-            /**
-             * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
-             * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
-             */
+//           String searchActionResponse = util.getJsonLD("SearchActionResponse");
+            SearchActionModel request = (SearchActionModel) util.getjsonLDModel(searchInput);
+            String searchRequest = request.event.name;
+            EventModel[] allMatchingEvents = findAllMatchingEvents(searchRequest);
+            server.messageArea.append("Found: "+allMatchingEvents.length+" Events.");
+            String  searchActionResponse = createResponseFromResults(allMatchingEvents,searchRequest)+"\n";
             return searchActionResponse;
         }
 
         private String generateBuyActionResponseJsonLD(String buyInput) {
-            String buyActionResponse = util.getJsonLD(util.jsonFolder + "BuyActionResponse.json");
+            String buyActionResponse = util.getJsonLD("BuyActionResponse");
             /**
              * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
              * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.

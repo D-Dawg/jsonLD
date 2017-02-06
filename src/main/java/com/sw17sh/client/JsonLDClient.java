@@ -1,6 +1,7 @@
 package com.sw17sh.client;
 
 import com.sw17sh.model.JsonLDTypeModel;
+import com.sw17sh.model.SearchActionModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -25,24 +26,29 @@ public class JsonLDClient {
     private JsonLDTypeModel currentModelFromServer = null;
     private JButton sizeButton = new JButton("+");
     private JLabel label = new JLabel("Your Answer:");
+    private JLabel label2 = new JLabel("");
+    private String state = null;
 
     private void processWebsiteModel(String dataFieldInput) {
-
         //Parsing user input
         String searchActionRequest = generateSearchActionRequest(dataFieldInput);
-
         //Send SearchActionRequest
         out.println(searchActionRequest);
         messageArea.append("Send Search Action Request:" + "\n" + "\n");
         messageArea.append(dataFieldInput + "\n" + "\n");
 //        messageArea.append(searchActionRequest);
-
         //read SearchActionResponse
         String response = util.readInputJsonLDScriptNotWaitingInput(in);
-        currentModelFromServer = util.getjsonLDModel(response + "\n");
-        messageArea.append("Receive Search Action Response:" + "\n" + "\n");
-        messageArea.append(response + "\n" + "\n");
-        label.setText("Choose an Event and Offer you want to buy:\n Eventname, OfferNumber, First Name, Last Name");
+        if(response.matches("No Events found.\n}")){
+            label.setText("No Matching Events found. Search again");
+        }else{
+            currentModelFromServer = util.getjsonLDModel(response + "\n");
+            SearchActionModel serverResponse = (SearchActionModel) currentModelFromServer;
+            label.setText("The Server found: "+serverResponse.result.length+" Events.");
+            messageArea.append("Receive Search Action Response:" + "\n" + "\n");
+            messageArea.append(response + "\n" + "\n");
+            label2.setText("Choose an Event you want to go to \n Which offer do you choose? Eventname,OfferNo");
+        }
     }
 
     private void processSearchActionResponse(String dataFieldInput) {
@@ -79,6 +85,11 @@ public class JsonLDClient {
 
 
     private void processJsonModel(String dataFieldInput) {
+//        if(state.equals("search")){
+//
+//        }else if(state.equals("book")){
+//
+//        }
         if (currentModelFromServer.getType().equals("WebSite")) {
             processWebsiteModel(dataFieldInput);
         } else if(currentModelFromServer.getType().equals("SearchAction")){
@@ -106,10 +117,12 @@ public class JsonLDClient {
         messageArea.setBackground(new Color(211,211,211));
         messageArea.setEditable(false);
         label.setPreferredSize( new Dimension(200,50));
+        label2.setPreferredSize( new Dimension(200,20));
         JPanel panel = newVerticalPanel();
         panel.add(sizeButton);
         panel.add(new JScrollPane(messageArea));
         panel.add(label);
+        panel.add(label2);
         panel.add(dataField);
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         frame.add(panel);
@@ -122,6 +135,18 @@ public class JsonLDClient {
                 String dataFieldInput = dataField.getText();
                 processJsonModel(dataFieldInput);
                 dataField.setText("");
+
+//                if(state==null){
+//                    if(dataFieldInput.matches(".*search") || dataFieldInput.matches(".*book.*") ){
+//                        state = dataFieldInput;
+//                    }else{
+//                        label2.setText("Illegal Input, type search or book.");
+//                        dataField.setText("");
+//                    }
+//                }else{
+//                    processJsonModel(dataFieldInput);
+//                    dataField.setText("");
+//                }
             }
         });
         sizeButton.addActionListener(new ActionListener() {
@@ -174,7 +199,8 @@ public class JsonLDClient {
         String jsonSearchAction = util.readInputJsonLDScriptNotWaitingInput(in);
         messageArea.append(jsonSearchAction + "\n" + "\n");
         currentModelFromServer = util.getjsonLDModel(jsonSearchAction + "\n");
-        label.setText("Whats the name of the event you want to search for?");
+        label.setText("Whats the name of the event you want to go to?");
+        label2.setText("Hints; The Name in The DB are XLETIX1, XLETIX2, XLETIX3");
         messageArea.append(  "\n" + "\n");
     }
 
@@ -194,21 +220,26 @@ public class JsonLDClient {
 
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
+        messageArea.append("Do you want to search an Event or book it? (Search/Book)");
+
 
         processSearchActionJsonLD();
     }
 
+    /**
+     * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
+     * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+     */
     private String generateSearchActionRequest(String searchInput) {
-        String filledOutSearchAction = util.getJsonLD(util.jsonFolder + "SearchActionRequest.json");
-        /**
-         * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
-         * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
-         */
+        String filledOutSearchAction = util.getJsonLD( "SearchActionRequest");
+        SearchActionModel model = (SearchActionModel) util.getjsonLDModel(filledOutSearchAction);
+        model.event.name = searchInput;
+        filledOutSearchAction = util.getJsonFromModel(model)+"\n\n";
         return filledOutSearchAction;
     }
 
     private String generateFilledOutBuyActionJsonLD(String buyInput) {
-        String buyActionRequest = util.getJsonLD(util.jsonFolder + "BuyActionRequest.json");
+        String buyActionRequest = util.getJsonLD( "BuyActionRequest");
         /**
          * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
          * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.

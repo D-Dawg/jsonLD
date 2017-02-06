@@ -15,29 +15,8 @@ public class SearchActionModel extends JsonLDTypeModel {
     public EventModel event;
     @JsonProperty(value = "result-output")
     public String resultOutput;
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Place extends JsonLDTypeModel {
-
-        @JsonProperty(value = "address")
-        public PostalAddress address;
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public static class PostalAddress extends JsonLDTypeModel {
-            @JsonProperty("@type")
-            public String type;
-            @JsonProperty(value = "addressLocality-input")
-            public PropertyValueSpecificationModel addressLocalityInput;
-
-            @JsonProperty(value = "addressCountry-input")
-            public PropertyValueSpecificationModel addressCountryInput;
-        }
+    @JsonProperty(value = "result")
+    public EventModel[] result;
 
 
-
-
-
-
-
-    }
 }
