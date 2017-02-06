@@ -1,7 +1,7 @@
 {
   "@context": "http://schema.org",
   "@type": "BuyAction",
-  "actionStatus": "PotentialActionStatus",
+  "actionStatus": "ActiveActionStatus",
   "target": "www.oururl.com",
   "agent": {
     "@type": "Person",

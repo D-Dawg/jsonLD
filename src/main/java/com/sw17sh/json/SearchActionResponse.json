@@ -52,7 +52,10 @@
         },
         "itemOffered": {
           "@type": "Ticket",
-          "underName": "Mr Ticket Buyer",
+          "underName-input": {
+            "@type": "PropertyValueSpecification",
+            "valueName": "Ticket amount"
+          },
           "totalPrice": "54",
           "issuedBy": {
             "@type": "Organization",

@@ -1,7 +1,7 @@
 {
   "@context": "http://schema.org",
   "@type": "SearchAction",
-    "actionStatus": "PotentialActionStatus",
+  "actionStatus": "ActiveActionStatus",
     "target": "http://eventbrite.com/search",
     "result-output": "required",
     "object": {
