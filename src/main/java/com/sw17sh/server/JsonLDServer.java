@@ -2,8 +2,10 @@ package com.sw17sh.server;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sw17sh.model.BuyActionModel;
 import com.sw17sh.model.EventModel;
 import com.sw17sh.model.SearchActionModel;
+import com.sw17sh.model.TicketModel;
 import com.sw17sh.util.Util;
 
 import javax.swing.*;
@@ -166,8 +168,10 @@ public class JsonLDServer {
             server.messageArea.append("\n");
             server.messageArea.append("Server sends BuyAction Response:"+"\n");
             String searchActionResponse = generateBuyActionResponseJsonLD(input);
-//           server.messageArea.append(searchActionResponse);
+
+            server.messageArea.append(searchActionResponse);
             out.println(searchActionResponse);
+
             wait = true;
             waitForResponse();
         }
@@ -246,7 +250,16 @@ public class JsonLDServer {
         }
 
         private String generateBuyActionResponseJsonLD(String buyInput) {
-            String buyActionResponse = util.getJsonLD("BuyActionResponse");
+            BuyActionModel request = (BuyActionModel) util.getjsonLDModel(buyInput);
+
+            String ticketJsonString = util.getJsonLD("Ticket");
+            TicketModel ticket = (TicketModel) util.getjsonLDModel(ticketJsonString);
+            TicketModel[] ticketArray = {ticket};
+            request.result = ticketArray;
+
+            // String buyActionResponse = util.getJsonLD("BuyActionResponse");
+
+            String buyActionResponse = util.getJsonFromModel(request);
             /**
              * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
              * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.

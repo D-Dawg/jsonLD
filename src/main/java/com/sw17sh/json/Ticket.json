@@ -1,0 +1,18 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Ticket",
+  "name": "XLETIX S-Distanz Ticket",
+  "url": "http://www.xletix.com/S-Distance",
+  "underName": "Mr Ticket Buyer",
+  "totalPrice": "54",
+  "TicketNumber": "1",
+  "dateIssued": "2017-07-27T12:00:00",
+  "issuedBy": {
+    "@type": "Organization",
+    "id": "www.ID.Eventbrite.Organization.com",
+    "name": "Eventbrite GmbH",
+    "url": "http://www.Eventbrite.de/"
+  }
+}
+
+

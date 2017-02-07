@@ -1,9 +1,7 @@
 package com.sw17sh.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sw17sh.model.JsonLDTypeModel;
-import com.sw17sh.model.SearchActionModel;
-import com.sw17sh.model.WebsiteModel;
+import com.sw17sh.model.*;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -129,9 +127,38 @@ public class Util {
             jsonLDModel = readSearchActionModel(jsonLD);
         } else if (jsonLDtype.equals("BuyAction")) {
             System.out.println("Buy Action");
-            //jsonLDModel = readBuyActionModel(jsonLD);
+            jsonLDModel = readBuyActionModel(jsonLD);
+        } else if (jsonLDtype.equals("Ticket")) {
+            System.out.println("Ticket");
+            jsonLDModel = readTicketModel(jsonLD);
         }
         return jsonLDModel;
+    }
+
+    public TicketModel readTicketModel(String jsonLDTicket) {
+        if (jsonLDTicket != null) {
+            try {
+                return objectMapper.readValue(jsonLDTicket, TicketModel.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            LOGGER.error("Empty String cant continue");
+        }
+        return null;
+    }
+
+    private JsonLDTypeModel readBuyActionModel(String jsonLDBuyAction) {
+        if (jsonLDBuyAction != null) {
+            try {
+                return objectMapper.readValue(jsonLDBuyAction, BuyActionModel.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            LOGGER.error("Empty String cant continue");
+        }
+        return null;
     }
 
     private JsonLDTypeModel readSearchActionModel(String jsonLDSerachACtion) {
