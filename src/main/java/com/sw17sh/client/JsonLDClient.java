@@ -61,7 +61,7 @@ public class JsonLDClient {
         out.flush();
 
         //read and print BuyActionResponse
-        String response = util.readInputJsonLDScript(in);
+        String response = util.readInputJsonLDScript2(in);
         messageArea.append("Receive Buy Action Response:"+"\n");
         messageArea.append( response + "\n" + "\n");
         label.setText("Thank you for buying a Ticket with us."+"\n");
