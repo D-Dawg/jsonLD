@@ -254,8 +254,11 @@ public class JsonLDServer {
 
             String ticketJsonString = util.getJsonLD("Ticket");
             TicketModel ticket = (TicketModel) util.getjsonLDModel(ticketJsonString);
+            ticket.underName = "Mr Ticket Buyer";
+            // ticket.issuedBy="Event Web Assistant";
             TicketModel[] ticketArray = {ticket};
             request.result = ticketArray;
+            request.actionStatus = "CompletedActionStatus";
 
             // String buyActionResponse = util.getJsonLD("BuyActionResponse");
 

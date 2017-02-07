@@ -9,7 +9,7 @@ public class TicketModel extends JsonLDTypeModel {
 
 
     @JsonProperty("underName")
-    private String underName;
+    public String underName;
 
     @JsonProperty(value = "issuedBy")
     public Object issuedBy;
