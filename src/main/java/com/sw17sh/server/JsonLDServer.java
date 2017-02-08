@@ -185,12 +185,20 @@ public class JsonLDServer {
         private void sendWelcomeMessageAndWebSiteJsonLDToClient() {
             // Send a welcome message to the client.
             initializeIO();
-            ServerImpl server = new ServerImpl();
-            String webSiteJsonLD = server.service1InitialConnect();  //
+            String webSiteJsonLD = service1InitialConnect();  //
             out.println("Hello, you are client #" + clientNumber + ".");
             out.println(webSiteJsonLD);
             wait = true;
             waitForResponse();
+        }
+
+        /**
+         * The first time the client connects with the server.
+         * The server now sends the client a InputSearchActionJsonLD, which the client than can fill out and send back.
+         * @return InputSearchActionJsonLD
+         */
+        private String service1InitialConnect(){
+            return util.getJsonLD("SearchActionSpecification");
         }
 
         private void getJsonFilesAndProcessThem(String input) {
