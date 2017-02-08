@@ -15,7 +15,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-
+/**
+ * Prototypical implementation of a client
+ * It connects to the server and can process the content of the website automatically
+ * based on jsonLD files he receives:
+ * For a rough idea refer to presentation
+ * The folder json contains files which show this communication exemplarily.
+ * 1. Client connects and receives the >> SearchActionSpecification << from Server
+ * 2. Client fills out information and sends back the >> SearchActionRequest <<
+ * 3. Server receives Request processes Data and sends back >> SearchActionResponse <<
+ * 4. Client receives response, processes it and sends back the >> BuyActionRequest <<
+ * 5. Server receives request, processes Data and sends back >> BuyActionResponse <<
+ */
 public class JsonLDClient {
     private BufferedReader in;
     private PrintWriter out;
@@ -29,6 +40,14 @@ public class JsonLDClient {
     private JLabel label2 = new JLabel("");
     private String state = null;
 
+    /**
+     * The client received the SearchActionSpecification, which is a website containing a potential SearchAction
+     * It fills out the SearchAction, with required parameters. In this case the parameter is representing the Name of Event.
+     * @param dataFieldInput should be:
+     *                       Name of event
+     *                       Time or Time interval of Event
+     *                       Place/Location
+     */
     private void processWebsiteModel(String dataFieldInput) {
         //Parsing user input
         String searchActionRequest = generateSearchActionRequest(dataFieldInput);
@@ -59,7 +78,6 @@ public class JsonLDClient {
 //        messageArea.append(buyActionRequest + "\n" + "\n");
         out.println(buyActionRequest);
         out.flush();
-
         //read and print BuyActionResponse
         String response = util.readInputJsonLDScript2(in);
         messageArea.append("Receive Buy Action Response:"+"\n");
@@ -110,6 +128,9 @@ public class JsonLDClient {
         return panel;
     }
 
+    /**
+     * GUI Layout
+     */
     private void generateGUI(){
         // Layout GUI
         dataField.setPreferredSize( new Dimension( 200, 50 ) );
@@ -135,7 +156,10 @@ public class JsonLDClient {
                 String dataFieldInput = dataField.getText();
                 processJsonModel(dataFieldInput);
                 dataField.setText("");
-
+                /**
+                 * The Server can receive either an Search or BuyAction and processes them independently.
+                 * The idea of this code-snipet was to show this feature.
+                 */
 //                if(state==null){
 //                    if(dataFieldInput.matches(".*search") || dataFieldInput.matches(".*book.*") ){
 //                        state = dataFieldInput;
@@ -159,6 +183,9 @@ public class JsonLDClient {
 
     }
 
+    /**
+     * Constructor Client
+     */
     public JsonLDClient() {
         generateGUI();
         generateActionListners();
@@ -193,6 +220,11 @@ public class JsonLDClient {
         }
     }
 
+    /**
+     * Client receives on the initial connect to the Server the json containing a website and a potential Action SearchAction
+     * To complete the potential Action and send back the filled out Search Action, input is required.
+     * (Name, Place, Time of Event)
+     */
     private void processSearchActionJsonLD(){
         //Read and Print SeachArctionSpecification
         messageArea.append("\nReceive Search Action Specification:" + "\n");
@@ -220,15 +252,20 @@ public class JsonLDClient {
 
         // Consume the initial welcoming messages from the server
         messageArea.append(in.readLine() + "\n");
-        messageArea.append("Do you want to search an Event or book it? (Search/Book)");
+//        messageArea.append("Do you want to search an Event or book it? (Search/Book)");
 
 
         processSearchActionJsonLD();
     }
 
     /**
-     * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
-     * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
+     * Client uses parameter to generate a SearchActionRequest.
+     * Based on the SearchActionSpecification
+     * @param searchInput exemplarily for searchParameters
+     *                    Event name
+     *                    Event period/time
+     *                    Event location/place
+     * @return the jsonLD which will be send as the Request to the Server
      */
     private String generateSearchActionRequest(String searchInput) {
         String filledOutSearchAction = util.getJsonLD( "SearchActionRequest");
@@ -238,12 +275,21 @@ public class JsonLDClient {
         return filledOutSearchAction;
     }
 
+    /**
+     * Here the client received the SearchActionResponse from the Server after sending the SearchActionRequest.
+     * It is now filling out the potential BuyAction he received in the Response.
+     * The client should be implemented the way, that it now specifies all information to buy the Required Ticket.
+     * @param buyInput prototypical should be parameters like:
+     *                 Name of Buyer
+     *                 Eventname of Events in SearchActionResponse
+     *                 Which Ticket offer he wants to choose in case there are multiple
+     *                 Amount of Tickets he wants to buy
+     *                  --> mapped with the property: includesObject inside the SearchActionResponse
+     * @return
+     */
     private String generateFilledOutBuyActionJsonLD(String buyInput) {
         String buyActionRequest = util.getJsonLD( "BuyActionRequest");
-        /**
-         * With the searchInput and currentModelFromServer (global) of the json this method is generating a searchAction json,
-         * with the data (searchInput) the user defines. In future this inputs can be more than one like location, time frame etc.
-         */
+        //missing implementation (similar to generateSearchActionRequest(String searchInput))
         return buyActionRequest;
     }
 
