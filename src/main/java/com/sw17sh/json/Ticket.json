@@ -2,10 +2,10 @@
   "@context": "http://schema.org",
   "@type": "Ticket",
   "name": "XLETIX S-Distanz Ticket",
-  "url": "http://www.xletix.com/S-Distance",
+  "url": "http://www.xletix.com/S-Distance/ticket/1",
   "underName": "Mr Ticket Buyer",
   "totalPrice": "54",
-  "TicketNumber": "1",
+  "ticketNumber": "1",
   "dateIssued": "2017-07-27T12:00:00",
   "issuedBy": {
     "@type": "Organization",
