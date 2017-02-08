@@ -32,6 +32,7 @@ Structure of project:
 - model
     Jackson is used for mapping json to java classes.
     Folder containing all models used to map json communication
+    --> generate requests/responses with adjusted parameters
 - server
     contains implementation of server
     JsonLDServer contains main to run it

@@ -12,7 +12,7 @@ public class BuyActionModel extends JsonLDTypeModel {
     @JsonProperty(value = "target")
     public String target;
     @JsonProperty(value = "object")
-    public EventModel event;
+    public OfferModel event;
 
     @JsonProperty(value = "agent")
     public Person agent;

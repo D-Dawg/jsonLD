@@ -9,13 +9,13 @@ public class EventModel extends JsonLDTypeModel {
 
 
     @JsonProperty("url")
-    private String url;
+    public String url;
 
     @JsonProperty(value = "name")
     public String name;
 
     @JsonProperty(value = "potentialAction")
-    private SearchActionModel searchActionModel;
+    public SearchActionModel searchActionModel;
 
     @JsonProperty(value = "startDate")
     public String startDate;
