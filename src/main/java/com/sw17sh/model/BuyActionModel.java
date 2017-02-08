@@ -13,8 +13,38 @@ public class BuyActionModel extends JsonLDTypeModel {
     public String target;
     @JsonProperty(value = "object")
     public EventModel event;
-    // @JsonProperty(value = "result-output")
-    //public String resultOutput;
+
+    @JsonProperty(value = "agent")
+    public Person agent;
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Person extends JsonLDTypeModel {
+
+        @JsonProperty(value = "familyName")
+        public String familyName;
+
+
+        @JsonProperty(value = "givenName")
+        public String givenName;
+
+        @JsonProperty(value = "email")
+        public String email;
+
+       /* @JsonProperty(value = "address")
+        public PostalAddress address;
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class PostalAddress extends JsonLDTypeModel {
+
+            @JsonProperty(value = "addressLocality")
+            public PropertyValueSpecificationModel addressLocality;
+
+            @JsonProperty(value = "addressCountry")
+            public PropertyValueSpecificationModel addressCountry;
+        }*/
+
+    }
+
     @JsonProperty(value = "result")
     public TicketModel[] result;
 
