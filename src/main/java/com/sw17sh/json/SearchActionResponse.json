@@ -79,7 +79,7 @@
             "url": "http://www.xletix.com/"
           },
           "actionStatus": "PotentialActionStatus",
-          "target": "www.oururl.com",
+          "target": "http://example.com/buy?&q={query}",
           "priceSpecification": {
             "@type": "priceSpecification",
             "id": "www.ID.PriceSpecification.Offer.S.XLETIX.com",
@@ -154,7 +154,7 @@
             "url": "http://www.xletix.com/"
           },
           "actionStatus": "PotentialActionStatus",
-          "target": "www.oururl.com",
+          "target": "http://example.com/buy?&q={query}",
           "priceSpecification": {
             "@id": "www.ID.PriceSpecification.Offer.M.XLETIX.com"
           },

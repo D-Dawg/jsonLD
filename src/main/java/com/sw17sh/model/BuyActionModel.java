@@ -13,8 +13,8 @@ public class BuyActionModel extends JsonLDTypeModel {
     public String target;
     @JsonProperty(value = "object")
     public EventModel event;
-    @JsonProperty(value = "result-output")
-    public String resultOutput;
+    // @JsonProperty(value = "result-output")
+    //public String resultOutput;
     @JsonProperty(value = "result")
     public TicketModel[] result;
 
